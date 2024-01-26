@@ -1,3 +1,10 @@
 [gd_scene format=3 uid="uid://c4185mj2sm77v"]
 
 [node name="Node2D" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 129.0
+offset_top = 90.0
+offset_right = 169.0
+offset_bottom = 113.0
+text = "At the end of the day we are all parts of the joke called life"
