@@ -8,3 +8,5 @@ offset_top = 90.0
 offset_right = 169.0
 offset_bottom = 113.0
 text = "At the end of the day we are all parts of the joke called life"
+
+[node name="Camera2D" type="Camera2D" parent="."]
