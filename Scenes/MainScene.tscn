@@ -1,12 +1,8 @@
-[gd_scene format=3 uid="uid://c4185mj2sm77v"]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/scriptTest.cs" type="Script" id=1]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Label" type="Label" parent="."]
-offset_left = 129.0
-offset_top = 90.0
-offset_right = 169.0
-offset_bottom = 113.0
-text = "At the end of the day we are all parts of the joke called life"
-
 [node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource( 1 )
