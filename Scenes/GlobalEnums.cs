@@ -1,11 +1,11 @@
 using Godot;
 using System;
 
-enum Color {
+public enum Color {
     TYPE1,
     TYPE2
 }
-enum Shape {
+public enum Shape {
     TYPE1,
     TYPE2
 }
