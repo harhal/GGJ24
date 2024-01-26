@@ -1,11 +1,19 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Resources/512_SimpleBot.png" type="Texture" id=1]
-[ext_resource path="res://Scenes/Robot.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Robot.cs" type="Script" id=2]
+[ext_resource path="res://Resources/512_Tribot.png" type="Texture" id=3]
+[ext_resource path="res://Resources/512_SquareBot.png" type="Texture" id=4]
 
 [node name="Robot" type="Node2D"]
 script = ExtResource( 2 )
 RobotShape = 1
+FirstShapeTexture = ExtResource( 1 )
+SecondShapeTexture = ExtResource( 4 )
+ThirdShapeTexture = ExtResource( 3 )
+FirstColor = Color( 0.427451, 1, 0.141176, 1 )
+SecondColor = Color( 0.854902, 1, 0, 1 )
+ThirdColor = Color( 0.235294, 0.729412, 1, 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.1, 0.1 )

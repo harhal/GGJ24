@@ -13,6 +13,7 @@ texture = ExtResource( 2 )
 [node name="Robot" parent="." instance=ExtResource( 3 )]
 position = Vector2( -174, -151 )
 
-[node name="Robot" parent="Robot" instance=ExtResource( 3 )]
-position = Vector2( 75, 3 )
+[node name="Robot2" parent="." instance=ExtResource( 3 )]
+position = Vector2( -78, -147 )
 RobotColor = 1
+RobotShape = 0
