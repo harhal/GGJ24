@@ -1,11 +1,12 @@
-[gd_resource type="SpriteFrames" load_steps=2 format=2]
+[gd_resource type="SpriteFrames" load_steps=3 format=2]
 
-[ext_resource path="res://Resources/char.png" type="Texture" id=1]
+[ext_resource path="res://Resources/Character/char.png" type="Texture" id=1]
+[ext_resource path="res://Resources/Character/char_morg.png" type="Texture" id=2]
 
 [resource]
 animations = [ {
-"frames": [ ExtResource( 1 ) ],
+"frames": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ) ],
 "loop": true,
-"name": "default",
+"name": "idle",
 "speed": 5.0
 } ]
