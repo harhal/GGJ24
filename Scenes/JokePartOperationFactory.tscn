@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/JokeParts/JokePartOperationFactory.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/JokePartOperation.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/AddOneJokePartOperation.tres" type="Resource" id=3]
+
+[node name="JokePartOperationFactory" type="Node"]
+script = ExtResource( 1 )
+JokePartOperationTemplate = ExtResource( 2 )
+JokePartOperationsSetup = [ ExtResource( 3 ) ]

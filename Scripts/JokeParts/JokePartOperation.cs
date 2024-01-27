@@ -1,11 +1,16 @@
-using System;
-using System.Collections.Generic;
 using Godot;
 
-namespace GGJ24.Scripts
+namespace GGJ24.Scripts.JokeParts
 {
+	public enum JokeOperationType
+	{
+		None,
+		AddOne
+	}
+	
 	public enum JokePartProcessPhase
 	{
+		None,
 		BeforeAllMain,
 		DuringMain,
 		AfterAllMain,
@@ -14,23 +19,47 @@ namespace GGJ24.Scripts
 
 	public class JokePartOperation : Node2D
 	{
-		[Export] protected Texture OperationTexture;
-
+		public JokeOperationType Type;
+		
+		protected Texture Texture;
 		protected JokePartProcessPhase ProcessPhase;
+		protected string LabelText;
+
+		public void Setup(JokePartOperationPayload payload)
+		{
+			Type = payload.Type;
+	
+			Texture = payload.Texture;
+			ProcessPhase = payload.ProcessPhase;
+			LabelText = payload.LabelText;
+		}
 
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
 			GD.Print("JokePartOperation ready");
 
-			var sprite = GetChild<Sprite>(0);
-
-			if (sprite == null)
+			var sprite = GetNode<Sprite>("%Sprite");
+			if (sprite != null)
 			{
-				return;
+				Ready_SetupSprite(sprite);
 			}
+			
+			var label = GetNode<Label>("%Label");
+			if (label != null)
+			{
+				Ready_SetupLabel(label);
+			}
+		}
 
-			sprite.Texture = OperationTexture;
+		protected void Ready_SetupSprite(Sprite sprite)
+		{
+			sprite.Texture = Texture;
+		}
+		
+		protected void Ready_SetupLabel(Label label)
+		{
+			label.Text = LabelText;
 		}
 		
 	}
