@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Shapes/ColorsStorage.cs" type="Script" id=1]
+[ext_resource path="res://Resources/Colors/FirstColor.tres" type="Resource" id=2]
+
+[node name="ColorsStorage" type="Node"]
+script = ExtResource( 1 )
+_colorDataList = [ ExtResource( 2 ), null, null ]
