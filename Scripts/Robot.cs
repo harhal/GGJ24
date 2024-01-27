@@ -31,56 +31,17 @@ namespace GGJ24.Scripts
 
         [Export] private Dictionary<int, float> _boredomLevelsToFunDebuff;
         [Signal] public delegate void NewBoredomLevelReached(Robot robot);
-        
-        //TODO: rename all of this
-        [Export]
-        Texture FirstShapeTexture;
-        
-        [Export]
-        Texture SecondShapeTexture;
-        
-        [Export]
-        Texture ThirdShapeTexture;
-
-        [Export] private Godot.Color FirstColor;
-        [Export] private Godot.Color SecondColor;
-        [Export] private Godot.Color ThirdColor;
 
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
             _fun = _startingFun;
-            
-            var sprite = GetNode("MainSprite") as Sprite;
-            
-            var shapesStorage = GetNode<ColorsStorage>("%ColorsStorage");
 
-            sprite.Modulate = shapesStorage.GetColor(_robotColor).Color;
-
-            return;
-            switch (_robotColor)
+            var mainSprite = GetNode<Sprite>("MainSprite");
+            var colorsStorage = GetNode<ColorsStorage>("%ColorsStorage");
+            if (mainSprite != null && colorsStorage != null)
             {
-                case Color.Type1:
-                    sprite.Modulate = FirstColor;
-                    break;
-                case Color.Type2:
-                    sprite.Modulate = SecondColor;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            switch (_robotShape)
-            {
-                case Shape.Circle:
-                    sprite.Texture = FirstShapeTexture;
-                    break;
-                
-                case Shape.Triangle:
-                    sprite.Texture = SecondShapeTexture;
-                    break;
-                
-                default:
-                    throw new ArgumentOutOfRangeException();
+                mainSprite.Modulate = colorsStorage.GetColor(_robotColor).Color;
             }
         }
 
