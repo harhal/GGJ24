@@ -1,4 +1,5 @@
 using System;
+using GGJ24.Scripts.Shapes;
 using Godot;
 using Godot.Collections;
 
@@ -50,7 +51,11 @@ namespace GGJ24.Scripts
         {
             _fun = _startingFun;
             
-            var sprite = GetChild<Sprite>(0);
+            var sprite = GetNode("MainSprite") as Sprite;
+            
+            var shapesStorage = GetNode<ColorsStorage>("%ColorsStorage");
+
+            sprite.Modulate = shapesStorage.GetColor(_robotColor).Color;
 
             return;
             switch (_robotColor)
