@@ -11,10 +11,9 @@ namespace GGJ24.Scripts.JokeParts
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
-			AddChild(Create(JokeOperationType.AddOne));
 		}
 
-		public JokePartOperation Create(JokeOperationType type)
+		public JokePartOperation Create(JokePartOperationType type)
 		{
 			if (!JokePartOperationsSetup.Exists(operationPayload => operationPayload != null && operationPayload.Type == type))
 			{
@@ -31,10 +30,5 @@ namespace GGJ24.Scripts.JokeParts
 			return operation;
 		}
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
 	}
 }

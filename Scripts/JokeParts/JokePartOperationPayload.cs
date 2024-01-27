@@ -4,8 +4,8 @@ namespace GGJ24.Scripts.JokeParts
 {
     public partial class JokePartOperationPayload : Resource
     {
-        public JokePartOperationPayload() : this(JokeOperationType.None, null, JokePartProcessPhase.None, "") {}
-        public JokePartOperationPayload(JokeOperationType inType, Texture inTexture, JokePartProcessPhase inProcessPhase, string inLabelText)
+        public JokePartOperationPayload() : this(JokePartOperationType.None, null, JokePartProcessPhase.None, "") {}
+        public JokePartOperationPayload(JokePartOperationType inType, Texture inTexture, JokePartProcessPhase inProcessPhase, string inLabelText)
         {
             Type = inType;
             Texture = inTexture;
@@ -13,7 +13,7 @@ namespace GGJ24.Scripts.JokeParts
             LabelText = inLabelText;
         }
 
-        [Export] public JokeOperationType Type;
+        [Export] public JokePartOperationType Type;
 		
         [Export] public Texture Texture;
 

@@ -1,11 +1,14 @@
+using System;
 using Godot;
 
 namespace GGJ24.Scripts.JokeParts
 {
-	public enum JokeOperationType
+	public enum JokePartOperationType
 	{
 		None,
-		AddOne
+		AddOne,
+		MultiplyTwo,
+		Max
 	}
 	
 	public enum JokePartProcessPhase
@@ -19,11 +22,17 @@ namespace GGJ24.Scripts.JokeParts
 
 	public class JokePartOperation : Node2D
 	{
-		public JokeOperationType Type;
+		public JokePartOperationType Type;
 		
 		protected Texture Texture;
 		protected JokePartProcessPhase ProcessPhase;
 		protected string LabelText;
+
+		public static JokePartOperationType GetRandomJokePartOperationType()
+		{
+			var random = new Random();
+			return (JokePartOperationType) random.Next(1, (int)JokePartOperationType.Max);
+		}
 
 		public void Setup(JokePartOperationPayload payload)
 		{
@@ -37,6 +46,7 @@ namespace GGJ24.Scripts.JokeParts
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
+			GD.Print("JokePartOperation ready");
 			var sprite = GetNode<Sprite>("%Sprite");
 			if (sprite != null)
 			{

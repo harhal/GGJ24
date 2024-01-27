@@ -9,11 +9,18 @@ namespace GGJ24.Scripts.JokeParts
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
-			AddChild(Create(Color.TYPE1, Shape.Triangle, JokeOperationType.AddOne));
+			AddChild(CreateRandom());
 		}
 
-		public JokePart Create(Color inColor, Shape inShape, JokeOperationType inOperationType)
+		public JokePart CreateRandom()
 		{
+			return Create(GlobalEnums.GetRandomColor(), GlobalEnums.GetRandomShape(), JokePartOperation.GetRandomJokePartOperationType());
+		}
+
+		public JokePart Create(Color inColor, Shape inShape, JokePartOperationType inOperationType)
+		{
+			GD.Print("Joke part created!");
+
 			var jokePart = JokePartTemplate.InstanceOrNull<JokePart>();
 			if (jokePart == null)
 			{
@@ -24,10 +31,5 @@ namespace GGJ24.Scripts.JokeParts
 			return jokePart;
 		}
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
 	}
 }

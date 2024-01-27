@@ -7,11 +7,11 @@ namespace GGJ24.Scripts.JokeParts
 	{
 		public Color Color;
 		public Shape Shape;
-		public JokeOperationType OperationType;
+		public JokePartOperationType OperationType;
 		
 		public JokePartOperation Operation;
 
-		public void Setup(Color inColor, Shape inShape, JokeOperationType inOperationType)
+		public void Setup(Color inColor, Shape inShape, JokePartOperationType inOperationType)
 		{
 			Color = inColor;
 			Shape = inShape;
@@ -38,10 +38,5 @@ namespace GGJ24.Scripts.JokeParts
 			}
 		}
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
 	}
 }
