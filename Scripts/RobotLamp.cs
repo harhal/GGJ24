@@ -18,7 +18,6 @@ namespace GGJ24.Scenes
         // Called every frame. 'delta' is the elapsed time since the previous frame.
         public override void _Process(float delta)
         {
-            //_gradient.GetColor( _parent.GetFun());
             Modulate = new Godot.Color(_gradient.Interpolate(_parent.GetFun()));
         }
     }

@@ -10,9 +10,9 @@ namespace GGJ24.Scripts
         [Export] private Color _robotColor = Color.None;
     
         [Export] private Shape _robotShape = Shape.None;
-
-        [Export] public uint seatRow = 0;
-        [Export] public uint seat = 0;
+        
+        [Export] public uint seatRow = 0; //Unused
+        [Export] public uint seat = 0; //Unused
 
         //Clamped to [0,1]
         private float _fun;
@@ -29,8 +29,11 @@ namespace GGJ24.Scripts
 
         private int _boredom = 0;
 
+        private bool _done = false;
+
         [Export] private Dictionary<int, float> _boredomLevelsToFunDebuff;
         [Signal] public delegate void NewBoredomLevelReached(Robot robot);
+        [Signal] public delegate void RobotDone(Robot robot);
 
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
@@ -92,6 +95,8 @@ namespace GGJ24.Scripts
 
         public void AddFun(float deltaFun)
         {
+            if (_done) return;
+            
             _fun += deltaFun;
 
             Mathf.Clamp(_fun, 0, 1);
@@ -101,10 +106,22 @@ namespace GGJ24.Scripts
                 EmitSignal(nameof(LowFunReached), this);
                 _bLowFunSignaled = true;
             }
-            else if (_fun > _lowFunMargin)
+            else if (_fun > _lowFunMargin && _fun <= 1)
             {
                 _bLowFunSignaled = false;
+            } 
+            else
+            {
+                _done = true;
+                OnRobotDone();
+                EmitSignal(nameof(RobotDone), this);
             }
+        }
+
+        private void OnRobotDone()
+        {
+            var mainSprite = GetNode<Sprite>("MainSprite");
+            mainSprite.Modulate = new Godot.Color(1,1,1,1);
         }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -1,10 +1,8 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=2 format=2]
 
 [ext_resource path="res://Scripts/Data/ShapeData.cs" type="Script" id=1]
-[ext_resource path="res://Resources/Shapes/TriangleSprite.png" type="Texture" id=2]
 
 [resource]
 script = ExtResource( 1 )
 Shape = 2
-JokePartShapeTexture = ExtResource( 2 )
-JokePartOperationTextureOffset = Vector2( 0, 20 )
+JokePartOperationTextureOffset = Vector2( 0, 0 )
