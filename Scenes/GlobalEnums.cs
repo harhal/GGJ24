@@ -6,8 +6,10 @@ public enum Color {
     TYPE2
 }
 public enum Shape {
-    TYPE1,
-    TYPE2
+    None,
+    Circle,
+    Triangle,
+    Square
 }
 
 public class GlobalEnums : Node

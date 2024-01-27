@@ -9,7 +9,7 @@ namespace GGJ24.Scenes
     {
         [Export] private Color _robotColor = Color.TYPE1;
     
-        [Export] private Shape _robotShape = Shape.TYPE1;
+        [Export] private Shape _robotShape = Shape.None;
 
         //Clamped to [0,1]
         private float _fun = 0.5f;
@@ -54,13 +54,14 @@ namespace GGJ24.Scenes
                     throw new ArgumentOutOfRangeException();
             }
 
+            return;
             switch (_robotShape)
             {
-                case Shape.TYPE1:
+                case Shape.Circle:
                     sprite.Texture = FirstShapeTexture;
                     break;
                 
-                case Shape.TYPE2:
+                case Shape.Triangle:
                     sprite.Texture = SecondShapeTexture;
                     break;
                 
