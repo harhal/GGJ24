@@ -4,28 +4,29 @@ using GGJ24.Scripts;
 
 public class Hall : Node2D
 {
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
-
 	[Export] public int HallWidth = 5;
 	[Export] public int HallDepth = 3;
+	
+	[Signal] public delegate void AllRobotsHappilyFinished();
 
-	private Robot[] _robots = new Robot[18];
+	public const int RobotsCount = 12;
+	private Robot[] _robots = new Robot[RobotsCount];
+
 	private int _lastAddedIndex = 0;
+	private int _happilyFinishedRobots = 0;
 
 	public void Register(Robot inRobot)
 	{
-		//TODO: This is broken and indices will be wrong. We don't need that ATM, so no worries 
-		//_robots[inRobot.seatRow, inRobot.seat] = inRobot;
 		_robots.SetValue(inRobot, _lastAddedIndex);
+		inRobot.Connect(nameof(Robot.HappilyFinished), this, "_on_Robot_HappilyFinished");
 		_lastAddedIndex++;
 	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		foreach (var child in GetChildren())
+		var children = GetChildren();
+		foreach (var child in children)
 		{
 			if (child is Robot robot)
 			{
@@ -33,16 +34,25 @@ public class Hall : Node2D
 			}
 		}
 	}
+
+	private void _on_Robot_HappilyFinished(Robot robot)
+	{
+		_happilyFinishedRobots++;
+
+		if (_happilyFinishedRobots >= RobotsCount)
+		{
+			GD.Print("ALL FINISHED");
+			EmitSignal(nameof(AllRobotsHappilyFinished));
+		}
+	}
 	
 	private void _on_Button_pressed()
 	{
 		// Replace with function body.
-		foreach (var robot in _robots)
+		for (var i = 0; i < RobotsCount; i++)
 		{
-			/*if(robot == null || !robot.Visible) continue;
-			
-			Joke joke = new Joke();
-			robot.ReceiveJoke(joke);*/
+			Joke joke = new Joke(4);
+			_robots[i].ReceiveJoke(joke);
 		}
 	}
 
