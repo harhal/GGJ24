@@ -12,6 +12,7 @@ namespace GGJ24.Scripts
 		[Export] public float MaxSpawnDelay = 4.0f;
 		
 		public TrackStart TrackStart;
+		public Position2D DeadZone;
 		public Sprite TrackPad;
 		public JokePartFactory JokePartFactory;
 		public Timer SpawnTimer;
@@ -24,6 +25,7 @@ namespace GGJ24.Scripts
 		public override void _Ready()
 		{
 			TrackStart = GetNode<TrackStart>("%TrackStart");
+			DeadZone = GetNode<Position2D>("%DeadZone");
 			JokePartFactory = GetNode<JokePartFactory>("%JokePartFactory");
 			TrackPad = GetNode<Sprite>("%TrackPad");
 			_trackPadStartPosition = TrackPad.Position;
@@ -58,6 +60,7 @@ namespace GGJ24.Scripts
 			var trackItem = TrackItemTemplate.InstanceOrNull<TrackJokePart>();
 			trackItem.Position = startPosition;
 			trackItem.ContainedJokePart = JokePartFactory.CreateRandom();
+			trackItem.DeadZoneY = DeadZone.Position.y;
 
 			AddChild(trackItem);
 		}
