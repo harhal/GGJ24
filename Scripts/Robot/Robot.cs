@@ -1,4 +1,5 @@
 using System;
+using GGJ24.Scripts.JokeParts;
 using GGJ24.Scripts.Shapes;
 using Godot;
 using Godot.Collections;
@@ -30,35 +31,28 @@ namespace GGJ24.Scripts
 		private bool _isPlaying = true;
 		[Signal] public delegate void HappilyFinished(Robot robot);
 
-		private Sprite _mainSprite;
+		private AnimatedSprite _mainSprite;
+		private AnimatedSprite _glareSprite;
 
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
 			_fun = _startingFun;
 
-			_mainSprite = GetNode<Sprite>("%MainSprite");
+			_mainSprite = GetNode<AnimatedSprite>("%MainSprite");
+			_glareSprite = GetNode<AnimatedSprite>("%Glare");
 			var colorsStorage = GetNode<ColorsStorage>("%ColorsStorage");
 			if (_mainSprite != null && colorsStorage != null)
 			{
 				_mainSprite.Modulate = colorsStorage.GetColor(_robotColor).Color;
 			}
-		}
-
-		public bool ReceiveJoke(Joke joke)
-		{
-			//foreach (var VARIABLE in joke.Parts)
-			{
-				//joke
-			}
 			
-			GD.Print("Haha!");
-			AddFun(0.1f);
-			return false;
+			JokeAssembler assembler = JokeAssembler.StaticAssembler;
+            
+			assembler.Connect(nameof(JokeAssembler.JokePartAdded), this, "_on_joke_part_added");
 		}
-
-		//TODO: Subscribe this to JokePartAdd delegate
-		private void OnJokePartAdded()
+		
+		private void _on_joke_part_added(JokePart part)
 		{
 			if (false /*this joke part relates to us*/)
 			{
@@ -82,6 +76,18 @@ namespace GGJ24.Scripts
 			AddFun(-_boredomLevelsToFunDebuff[currentLevel]);
 		}
 
+		public bool ReceiveJoke(Joke joke)
+		{
+			//foreach (var VARIABLE in joke.Parts)
+			{
+				//joke
+			}
+			
+			GD.Print("Haha!");
+			AddFun(0.1f);
+			return false;
+		}
+
 		public void AddFun(float deltaFun)
 		{
 			if (!_isPlaying)
@@ -97,6 +103,8 @@ namespace GGJ24.Scripts
 			{
 				EmitSignal(nameof(LowFunReached), this);
 				_bLowFunSignaled = true;
+				_mainSprite.Frame = 1;
+				_glareSprite.Frame = 1;
 
 				return;
 			}
@@ -104,8 +112,13 @@ namespace GGJ24.Scripts
 			if (_fun > _lowFunMargin && _fun <= 1)
 			{
 				_bLowFunSignaled = false;
+				_mainSprite.Frame = 0;
+				_glareSprite.Frame = 0;
 				return;
 			}
+			
+			_mainSprite.Frame = 3;
+			_glareSprite.Frame = 3;
 
 			FinishPlayingHappily();
 		}
