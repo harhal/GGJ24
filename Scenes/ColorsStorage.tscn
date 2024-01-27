@@ -1,8 +1,12 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Data/ColorsStorage.cs" type="Script" id=1]
 [ext_resource path="res://Resources/Colors/FirstColor.tres" type="Resource" id=2]
+[ext_resource path="res://Resources/Colors/FourthColor.tres" type="Resource" id=3]
+[ext_resource path="res://Resources/Colors/FifthColor.tres" type="Resource" id=4]
+[ext_resource path="res://Resources/Colors/SecondColor.tres" type="Resource" id=5]
+[ext_resource path="res://Resources/Colors/ThirdColor.tres" type="Resource" id=6]
 
 [node name="ColorsStorage" type="Node"]
 script = ExtResource( 1 )
-_colorDataList = [ ExtResource( 2 ), null, null ]
+_colorDataList = [ ExtResource( 2 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 4 ) ]
