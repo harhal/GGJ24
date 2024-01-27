@@ -9,7 +9,6 @@ namespace GGJ24.Scripts.JokeParts
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
-			AddChild(CreateRandom());
 		}
 
 		public JokePart CreateRandom()
