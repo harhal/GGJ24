@@ -8,6 +8,7 @@ namespace GGJ24.Scripts.JokeParts
 		None,
 		AddOne,
 		MultiplyTwo,
+		Punchline,
 		Max
 	}
 	

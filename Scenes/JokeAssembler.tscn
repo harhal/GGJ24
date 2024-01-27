@@ -11,6 +11,7 @@ HorizontalSpace = 1500.0
 TransitionTime = 0.3
 
 [node name="Background" type="Sprite" parent="."]
+visible = false
 scale = Vector2( 10.4, 1.44666 )
 texture = ExtResource( 1 )
 
