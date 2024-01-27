@@ -40,7 +40,7 @@ namespace GGJ24.Scripts
 			
 			foreach (Node sibling in parent.GetChildren())
 			{
-				var gameStateTracker = sibling.GetNode<GameStateTracker>("%GameStateTracker");
+				var gameStateTracker = sibling.GetNodeOrNull<GameStateTracker>("%GameStateTracker");
 				gameStateTracker?.SetState(GameState);
 			}
 		}
