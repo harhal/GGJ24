@@ -1,10 +1,9 @@
-using System;
 using GGJ24.Scripts.Data;
 using GGJ24.Scripts.JokeParts;
 using Godot;
 using Godot.Collections;
 
-namespace GGJ24.Scripts
+namespace GGJ24.Scripts.Robot
 {
     public class Robot : Node2D
     {

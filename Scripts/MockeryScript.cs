@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using GGJ24.Scripts;
+using GGJ24.Scripts.Robot;
 
 public class MockeryScript : Node2D
 {

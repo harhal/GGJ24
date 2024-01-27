@@ -1,4 +1,5 @@
 using GGJ24.Scripts;
+using GGJ24.Scripts.Robot;
 using Godot;
 
 namespace GGJ24.Scenes
