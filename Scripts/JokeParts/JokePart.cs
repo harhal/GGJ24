@@ -8,6 +8,7 @@ namespace GGJ24.Scripts.JokeParts
 		public Color Color;
 		public Shape Shape;
 		public JokePartOperationType OperationType;
+		public bool bIsFree = true;
 		
 		public JokePartOperation Operation;
 
@@ -33,10 +34,43 @@ namespace GGJ24.Scripts.JokeParts
 			if (shapesStorage != null && shapeSprite != null)
 			{
 				var shapeData = shapesStorage.GetShape(Shape);
-				shapeSprite.Texture = shapeData.Texture;
+				if (shapeData != null)
+				{
+					shapeSprite.Texture = shapeData.Texture;
+				}
+
 				shapeSprite.Scale = new Vector2(2, 2);
 			}
 		}
+		
+		private void _on_Area2D_input_event(object viewport, object @event, int shape_idx)
+		{
+			InputEventMouseButton MouseButtonInput = @event as InputEventMouseButton;
+			if (MouseButtonInput != null)
+			{
+				SendToJoke();
+			}
 
+			InputEventScreenTouch ScreenTouchInput = @event as InputEventScreenTouch;
+			if (ScreenTouchInput != null)
+			{
+				SendToJoke();
+			}
+		}
+
+		private void SendToJoke()
+		{
+			if (!bIsFree)
+			{
+				return;
+			}
+			
+			if (JokeAssembler.StaticAssembler != null)
+			{
+				JokeAssembler.StaticAssembler.AddElement(this);
+			}
+
+			bIsFree = false;
+		}
 	}
 }
