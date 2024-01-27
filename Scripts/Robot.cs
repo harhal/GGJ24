@@ -28,7 +28,7 @@ namespace GGJ24.Scripts
 		private int _boredom = 0;
 
 		private bool _isPlaying = true;
-		[Signal] public delegate void RobotDone(Robot robot);
+		[Signal] public delegate void HappilyFinished(Robot robot);
 
 		private Sprite _mainSprite;
 
@@ -43,14 +43,6 @@ namespace GGJ24.Scripts
 			{
 				_mainSprite.Modulate = colorsStorage.GetColor(_robotColor).Color;
 			}
-		}
-
-		public void SetActive(bool newActive)
-		{
-			Visible = newActive;
-			
-			//stop all logic
-			//stop signals from firing
 		}
 
 		public bool ReceiveJoke(Joke joke)
@@ -105,22 +97,24 @@ namespace GGJ24.Scripts
 			{
 				EmitSignal(nameof(LowFunReached), this);
 				_bLowFunSignaled = true;
+
+				return;
 			}
-			else if (_fun > _lowFunMargin && _fun <= 1)
+			
+			if (_fun > _lowFunMargin && _fun <= 1)
 			{
 				_bLowFunSignaled = false;
-			} 
-			else
-			{
-				_isPlaying = false;
-				OnRobotDone();
-				EmitSignal(nameof(RobotDone), this);
+				return;
 			}
+
+			FinishPlayingHappily();
 		}
 
-		private void OnRobotDone()
+		private void FinishPlayingHappily()
 		{
+			_isPlaying = false;
 			_mainSprite.Modulate = new Godot.Color(1,1,1,1);
+			EmitSignal(nameof(HappilyFinished), this);
 		}
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
