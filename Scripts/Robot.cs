@@ -1,15 +1,17 @@
 using System;
-using GGJ24.Scripts;
 using Godot;
 using Godot.Collections;
 
-namespace GGJ24.Scenes
+namespace GGJ24.Scripts
 {
     public class Robot : Node2D
     {
         [Export] private Color _robotColor = Color.TYPE1;
     
         [Export] private Shape _robotShape = Shape.None;
+
+        [Export] public uint seatRow = 0;
+        [Export] public uint seat = 0;
 
         //Clamped to [0,1]
         private float _fun = 0.5f;
@@ -84,6 +86,8 @@ namespace GGJ24.Scenes
             {
                 //joke
             }
+            
+            GD.Print("Haha!");
             return false;
         }
 

@@ -9,3 +9,11 @@ current = true
 
 [node name="Hall" parent="." instance=ExtResource( 1 )]
 position = Vector2( -180, 13 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = -379.0
+margin_right = 12.0
+margin_bottom = 110.0
+text = "Joke"
+
+[connection signal="pressed" from="Button" to="Hall" method="_on_Button_pressed"]
