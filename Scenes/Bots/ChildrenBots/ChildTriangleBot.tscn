@@ -23,3 +23,6 @@ frames = ExtResource( 3 )
 
 [node name="Glare" parent="." index="4"]
 frames = ExtResource( 4 )
+
+[node name="Sprite" parent="." index="5"]
+position = Vector2( -5, -160 )
