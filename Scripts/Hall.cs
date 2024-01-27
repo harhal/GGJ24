@@ -11,11 +11,15 @@ public class Hall : Node2D
 	[Export] public int HallWidth = 5;
 	[Export] public int HallDepth = 3;
 
-	private Robot[,] _robots = new Robot[5,3];
+	private Robot[] _robots = new Robot[18];
+	private int _lastAddedIndex = 0;
 
 	public void Register(Robot inRobot)
 	{
-		_robots[inRobot.seatRow, inRobot.seat] = inRobot;
+		//TODO: This is broken and indices will be wrong. We don't need that ATM, so no worries 
+		//_robots[inRobot.seatRow, inRobot.seat] = inRobot;
+		_robots.SetValue(inRobot, _lastAddedIndex);
+		_lastAddedIndex++;
 	}
 
 	// Called when the node enters the scene tree for the first time.
