@@ -4,21 +4,21 @@ namespace GGJ24.Scripts
 {
 	public class MainScene : Node2D
 	{
-		private Hall Hall;
-		private GameStateTracker GameStateTracker;
+		private Hall _hall;
+		private GameStateTracker _gameStateTracker;
 
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
-			Hall = GetNode<Hall>("%Hall");
-			Hall.Connect(nameof(Hall.AllRobotsHappilyFinished), this, "_on_Hall_AllRobotsHappilyFinished");
+			_hall = GetNode<Hall>("%Hall");
+			_hall.Connect(nameof(Hall.AllRobotsCompletedFun), this, "_on_Hall_AllRobotsCompletedFun");
 
-			GameStateTracker = GetNode<GameStateTracker>("%GameStateTracker");
+			_gameStateTracker = GetNode<GameStateTracker>("%GameStateTracker");
 		}
 
-		private void _on_Hall_AllRobotsHappilyFinished()
+		private void _on_Hall_AllRobotsCompletedFun()
 		{
-			GameStateTracker?.SetState(GameState.Won);
+			_gameStateTracker?.SetState(GameState.Won);
 		}
 
 	}

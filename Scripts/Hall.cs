@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using GGJ24.Scripts;
 using GGJ24.Scripts.Robot;
 
@@ -8,18 +7,18 @@ public class Hall : Node2D
 	[Export] public int HallWidth = 5;
 	[Export] public int HallDepth = 3;
 	
-	[Signal] public delegate void AllRobotsHappilyFinished();
+	[Signal] public delegate void AllRobotsCompletedFun();
 
-	public const int RobotsCount = 12;
+	private const int RobotsCount = 12;
 	private Robot[] _robots = new Robot[RobotsCount];
 
 	private int _lastAddedIndex = 0;
-	private int _happilyFinishedRobots = 0;
+	private int _completedFunRobots = 0;
 
 	public void Register(Robot inRobot)
 	{
 		_robots.SetValue(inRobot, _lastAddedIndex);
-		inRobot.Connect(nameof(Robot.HappilyFinished), this, "_on_Robot_HappilyFinished");
+		inRobot.Connect(nameof(Robot.FunLevelChanged), this, "_on_Robot_FunLevelChanged");
 		_lastAddedIndex++;
 	}
 
@@ -36,14 +35,17 @@ public class Hall : Node2D
 		}
 	}
 
-	private void _on_Robot_HappilyFinished(Robot robot)
+	private void _on_Robot_FunLevelChanged(Robot robot, FunLevel previousFunLevel, FunLevel newFunLevel)
 	{
-		_happilyFinishedRobots++;
-
-		if (_happilyFinishedRobots >= RobotsCount)
+		if (newFunLevel == FunLevel.Completed)
 		{
-			GD.Print("ALL FINISHED");
-			EmitSignal(nameof(AllRobotsHappilyFinished));
+			_completedFunRobots++;
+
+			if (_completedFunRobots >= RobotsCount)
+			{
+				GD.Print("ALL ROBOTS COMPLETED FUN");
+				EmitSignal(nameof(AllRobotsCompletedFun));
+			}
 		}
 	}
 	

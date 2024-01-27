@@ -5,6 +5,14 @@ using Godot.Collections;
 
 namespace GGJ24.Scripts.Robot
 {
+    public enum FunLevel
+    {
+        None,
+        Low,
+        Normal,
+        Completed
+    }
+    
     public class Robot : Node2D
     {
         [Export] private Color _robotColor = Color.None;
@@ -16,6 +24,8 @@ namespace GGJ24.Scripts.Robot
         [Signal]
         public delegate void NewBoredomLevelReached(Robot robot);
 
+        private FunLevel _funLevel = FunLevel.None;
+
         //Clamped to [0,1]
         private float _fun;
 
@@ -25,16 +35,11 @@ namespace GGJ24.Scripts.Robot
         }
 
         [Signal]
-        public delegate void LowFunReached(Robot robot);
-
-        private bool _bLowFunSignaled = false;
+        public delegate void FunLevelChanged(Robot robot, FunLevel previousFunLevel, FunLevel newFunLevel);
 
         private int _boredom = 0;
 
         private bool _isPlaying = true;
-
-        [Signal]
-        public delegate void HappilyFinished(Robot robot);
 
         private AnimatedSprite _mainSprite;
         private AnimatedSprite _glareSprite;
@@ -109,31 +114,38 @@ namespace GGJ24.Scripts.Robot
             }
 
             _fun = Mathf.Clamp(_fun + deltaFun, 0, 1);
+            var prevFunLevel = _funLevel;
 
             if (_fun <= _lowFunMargin)
             {
-                if (!_bLowFunSignaled)
-                {
-                    EmitSignal(nameof(LowFunReached), this);
-                    _bLowFunSignaled = true;
-                }
+                _funLevel = FunLevel.Low;
 
                 _mainSprite.Frame = 1;
                 _glareSprite.Frame = 1;
-
-                return;
             }
-
             // Don't even bother to ask why 0.99f, IDK either
-            if (_fun > _lowFunMargin && _fun <= 0.99f)
+            else if (_fun > _lowFunMargin && _fun <= 0.99f)
             {
-                _bLowFunSignaled = false;
+                _funLevel = FunLevel.Normal;
+
                 _mainSprite.Frame = 0;
                 _glareSprite.Frame = 0;
-                return;
+            }
+            else
+            {
+                _isPlaying = false;
+                _funLevel = FunLevel.Completed;
+
+                _mainSprite.Frame = 3;
+                _mainSprite.Modulate = new Godot.Color(1, 1, 1, 1);
+            
+                _glareSprite.Frame = 3;
             }
 
-            FinishPlayingHappily();
+            if (_funLevel != prevFunLevel)
+            {
+                EmitSignal(nameof(FunLevelChanged), this, prevFunLevel, _funLevel);
+            }
         }
 
         void React(int emojiNum)
@@ -155,18 +167,6 @@ namespace GGJ24.Scripts.Robot
             
             var currentOpacity = Mathf.Lerp(1, 0,passedPercent);
             _reactionSprite.Modulate = new Godot.Color(1, 1, 1, 1 - passedPercent);
-        }
-
-        private void FinishPlayingHappily()
-        {
-            _isPlaying = false;
-
-            _mainSprite.Frame = 3;
-            _mainSprite.Modulate = new Godot.Color(1, 1, 1, 1);
-            
-            _glareSprite.Frame = 3;
-
-            EmitSignal(nameof(HappilyFinished), this);
         }
 
 
