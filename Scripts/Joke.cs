@@ -14,6 +14,11 @@ namespace GGJ24.Scripts
 		private bool bIsFailed = false;
 	
 		private List<JokePart> Parts = new List<JokePart>();
+
+		public Joke(int MaxSequenceLength)
+		{
+			this.MaxSequenceLength = MaxSequenceLength;
+		}
 	
 		public float Score()
 		{

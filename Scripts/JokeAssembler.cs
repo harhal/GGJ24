@@ -31,7 +31,7 @@ public class JokeAssembler : Node2D
 	private bool IsLocked = false;
 
 	private List<ElementWithTransition> Elements;
-	private float TransitionProgress;
+	private float TransitionProgress = 1f;
 
 	public static JokeAssembler StaticAssembler;
 
@@ -55,8 +55,7 @@ public class JokeAssembler : Node2D
 
 		if (AssembledJoke == null)
 		{
-			AssembledJoke = new Joke();
-			AssembledJoke.MaxSequenceLength = MaxSequenceLength;
+			AssembledJoke = new Joke(MaxSequenceLength);
 		}
 
 		JokePart NewJokePart = Element as JokePart;
@@ -122,15 +121,27 @@ public class JokeAssembler : Node2D
 
 	void AddFinished()
 	{
-		if (IsLocked)
+		if (AssembledJoke.IsFinished())
 		{
-			for (int idx = 0; idx < Elements.Count; idx++)
-			{
-				ElementWithTransition Focus = Elements[idx];
-				Elements[idx].Element.QueueFree();
-			}
-			
-			Elements.Clear();
+			PushJoke();
 		}
+	}
+
+	void PushJoke()
+	{
+		OnJokePushed();
+	}
+
+	void OnJokePushed()
+	{
+		for (int idx = 0; idx < Elements.Count; idx++)
+		{
+			ElementWithTransition Focus = Elements[idx];
+			Elements[idx].Element.QueueFree();
+		}
+			
+		Elements.Clear();
+		AssembledJoke = new Joke(MaxSequenceLength);
+		IsLocked = false;
 	}
 }

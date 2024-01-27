@@ -39,10 +39,10 @@ public class Hall : Node2D
 		// Replace with function body.
 		foreach (var robot in _robots)
 		{
-			if(robot == null || !robot.Visible) continue;
+			/*if(robot == null || !robot.Visible) continue;
 			
 			Joke joke = new Joke();
-			robot.ReceiveJoke(joke);
+			robot.ReceiveJoke(joke);*/
 		}
 	}
 
