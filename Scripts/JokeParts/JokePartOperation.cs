@@ -44,23 +44,15 @@ namespace GGJ24.Scripts.JokeParts
 	
 			Texture = payload.Texture;
 			ProcessPhase = payload.ProcessPhase;
-			LabelText = payload.LabelText;
 		}
 
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
-			GD.Print("JokePartOperation ready");
 			var sprite = GetNode<Sprite>("%Sprite");
 			if (sprite != null)
 			{
 				Ready_SetupSprite(sprite);
-			}
-			
-			var label = GetNode<Label>("%Label");
-			if (label != null)
-			{
-				Ready_SetupLabel(label);
 			}
 		}
 
@@ -68,11 +60,6 @@ namespace GGJ24.Scripts.JokeParts
 		{
 			sprite.Translate(TextureOffset);
 			sprite.Texture = Texture;
-		}
-		
-		protected void Ready_SetupLabel(Label label)
-		{
-			label.Text = LabelText;
 		}
 		
 	}

@@ -10,7 +10,6 @@ namespace GGJ24.Scripts.JokeParts
             Type = inType;
             Texture = inTexture;
             ProcessPhase = inProcessPhase;
-            LabelText = inLabelText;
         }
 
         [Export] public JokePartOperationType Type;
@@ -18,7 +17,5 @@ namespace GGJ24.Scripts.JokeParts
         [Export] public Texture Texture;
 
         [Export] public JokePartProcessPhase ProcessPhase;
-
-        [Export] public string LabelText;
     }
 }
