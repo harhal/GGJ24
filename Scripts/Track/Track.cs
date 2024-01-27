@@ -2,7 +2,7 @@ using System;
 using GGJ24.Scripts.JokeParts;
 using Godot;
 
-namespace GGJ24.Scripts
+namespace GGJ24.Scripts.Track
 {
 	public class Track : Node2D
 	{
@@ -16,6 +16,7 @@ namespace GGJ24.Scripts
 		public Sprite TrackPad;
 		public JokePartFactory JokePartFactory;
 		public Timer SpawnTimer;
+		public GameStateTracker GameStateTracker;
 
 		private float _yAdvancement = 0;
 		private Vector2 _trackPadStartPosition;
@@ -32,6 +33,10 @@ namespace GGJ24.Scripts
 
 			SpawnTimer = GetNode<Timer>("%SpawnTimer");
 			SpawnTimer.Connect("timeout", this, "_on_SpawnTimer_timeout");
+
+			GameStateTracker = GetNode<GameStateTracker>("%GameStateTracker");
+			GameStateTracker.Connect(nameof(GameStateTracker.GameStateChanged), this,
+				"_on_GameStateTracker_GameStateChanged");
 
 			StartSpawnTimer();
 		}
@@ -55,14 +60,26 @@ namespace GGJ24.Scripts
 
 		private void SpawnNewItem()
 		{
-			Vector2 startPosition = TrackStart.GetStartPosition();
-
 			var trackItem = TrackItemTemplate.InstanceOrNull<TrackJokePart>();
-			trackItem.Position = startPosition;
+
+			trackItem.GameStateTracker = GameStateTracker;
+
+			trackItem.Position = TrackStart.GetStartPosition();
 			trackItem.ContainedJokePart = JokePartFactory.CreateRandom();
 			trackItem.DeadZoneY = DeadZone.Position.y;
 
 			AddChild(trackItem);
+		}
+
+		private void _on_GameStateTracker_GameStateChanged(GameState state)
+		{
+			if (state == GameState.Running)
+			{
+				return;
+			}
+
+			SetProcess(false);
+			SpawnTimer.Stop();
 		}
 
 		public override void _Process(float delta)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Resources/Track/track_pad.png" type="Texture" id=1]
 [ext_resource path="res://Resources/Track/track_border.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/Track/TrackJokePart.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Track/TrackStart.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/JokeParts/JokePartFactory.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/GameStateTracker.tscn" type="PackedScene" id=7]
 
 [node name="Track" type="Node2D"]
 script = ExtResource( 3 )
@@ -36,4 +37,7 @@ unique_name_in_owner = true
 one_shot = true
 
 [node name="JokePartFactory" parent="." instance=ExtResource( 6 )]
+unique_name_in_owner = true
+
+[node name="GameStateTracker" parent="." instance=ExtResource( 7 )]
 unique_name_in_owner = true

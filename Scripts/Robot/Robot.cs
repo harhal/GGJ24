@@ -111,7 +111,8 @@ namespace GGJ24.Scripts
 				return;
 			}
 			
-			if (_fun > _lowFunMargin && _fun <= 1)
+			// Don't even bother to ask why 0.999, IDK either
+			if (_fun > _lowFunMargin && _fun <= 0.999)
 			{
 				_bLowFunSignaled = false;
 				_mainSprite.Frame = 0;

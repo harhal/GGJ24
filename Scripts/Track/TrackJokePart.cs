@@ -1,11 +1,13 @@
 using GGJ24.Scripts.JokeParts;
 using Godot;
 
-namespace GGJ24.Scripts
+namespace GGJ24.Scripts.Track
 {
 	public class TrackJokePart : Node2D
 	{
 		[Export] public float Velocity = 100;
+
+		public GameStateTracker GameStateTracker;
 
 		public JokePart ContainedJokePart;
 		public float DeadZoneY;
@@ -23,7 +25,19 @@ namespace GGJ24.Scripts
 				return;
 			}
 
+			GameStateTracker.Connect(nameof(GameStateTracker.GameStateChanged), this, "_on_GameStateTracker_GameStateChanged");
+
 			AddChild(ContainedJokePart);
+		}
+		
+		private void _on_GameStateTracker_GameStateChanged(GameState state)
+		{
+			if (state == GameState.Running)
+			{
+				return;
+			}
+
+			SetProcess(false);
 		}
 
 		// Called every frame. 'delta' is the elapsed time since the previous frame.

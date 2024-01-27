@@ -12,7 +12,7 @@ namespace GGJ24.Scripts
 	public class GameStateTracker : Node
 	{
 		[Signal] public delegate void GameStateChanged(GameState state);
-	
+
 		public GameState GameState = GameState.Running;
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
@@ -25,6 +25,23 @@ namespace GGJ24.Scripts
 			{
 				GameState = state;
 				EmitSignal(nameof(GameStateChanged), GameState);
+
+				PropagateStateToSiblings();
+			}
+		}
+
+		private void PropagateStateToSiblings()
+		{
+			var parent = GetParent<Node>();
+			if (parent == null)
+			{
+				return;
+			}
+			
+			foreach (Node sibling in parent.GetChildren())
+			{
+				var gameStateTracker = sibling.GetNode<GameStateTracker>("%GameStateTracker");
+				gameStateTracker?.SetState(GameState);
 			}
 		}
 
