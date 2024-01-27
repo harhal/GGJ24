@@ -6,7 +6,7 @@ namespace GGJ24.Scripts
 {
     public class Robot : Node2D
     {
-        [Export] private Color _robotColor = Color.TYPE1;
+        [Export] private Color _robotColor = Color.None;
     
         [Export] private Shape _robotShape = Shape.None;
 
@@ -44,19 +44,19 @@ namespace GGJ24.Scripts
         {
             var sprite = GetChild<Sprite>(0);
 
+            return;
             switch (_robotColor)
             {
-                case Color.TYPE1:
+                case Color.Type1:
                     sprite.Modulate = FirstColor;
                     break;
-                case Color.TYPE2:
+                case Color.Type2:
                     sprite.Modulate = SecondColor;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            return;
             switch (_robotShape)
             {
                 case Shape.Circle:
