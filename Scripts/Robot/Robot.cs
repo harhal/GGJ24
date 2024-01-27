@@ -1,6 +1,6 @@
 using System;
+using GGJ24.Scripts.Data;
 using GGJ24.Scripts.JokeParts;
-using GGJ24.Scripts.Shapes;
 using Godot;
 using Godot.Collections;
 

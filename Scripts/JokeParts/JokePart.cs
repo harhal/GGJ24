@@ -1,4 +1,4 @@
-using GGJ24.Scripts.Shapes;
+using GGJ24.Scripts.Data;
 using Godot;
 
 namespace GGJ24.Scripts.JokeParts

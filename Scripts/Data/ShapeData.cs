@@ -1,6 +1,6 @@
 using Godot;
 
-namespace GGJ24.Scripts.Shapes
+namespace GGJ24.Scripts.Data
 {
 	public partial class ShapeData : Resource
 	{

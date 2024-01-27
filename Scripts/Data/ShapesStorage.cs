@@ -1,16 +1,15 @@
 using System.Collections.Generic;
 using Godot;
 
-namespace GGJ24.Scripts.Shapes
+namespace GGJ24.Scripts.Data
 {
 	public class ShapesStorage : Node
 	{
-		[Export] private List<ShapeData> _shapeDataList;
+		[Export] private List<ShapeData> _shapeDataList = new List<ShapeData>();
 
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
-		
 		}
 
 		public ShapeData GetShape(Shape shape)
