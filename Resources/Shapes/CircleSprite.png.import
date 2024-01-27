@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/SquareSprite.png-da1c14406cc9f0a3382bd009d88bdca6.stex"
+path="res://.import/CircleSprite.png-a3a59b8d381b47f54fef5474bc1f7df7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/SquareSprite.png"
-dest_files=[ "res://.import/SquareSprite.png-da1c14406cc9f0a3382bd009d88bdca6.stex" ]
+source_file="res://Resources/Shapes/CircleSprite.png"
+dest_files=[ "res://.import/CircleSprite.png-a3a59b8d381b47f54fef5474bc1f7df7.stex" ]
 
 [params]
 

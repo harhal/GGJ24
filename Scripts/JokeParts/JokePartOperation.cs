@@ -22,11 +22,14 @@ namespace GGJ24.Scripts.JokeParts
 
 	public class JokePartOperation : Node2D
 	{
+		// setup from payload:
 		public JokePartOperationType Type;
-		
 		protected Texture Texture;
 		protected JokePartProcessPhase ProcessPhase;
 		protected string LabelText;
+		
+		// state:
+		public Vector2 TextureOffset;
 
 		public static JokePartOperationType GetRandomJokePartOperationType()
 		{
@@ -62,6 +65,7 @@ namespace GGJ24.Scripts.JokeParts
 
 		protected void Ready_SetupSprite(Sprite sprite)
 		{
+			sprite.Translate(TextureOffset);
 			sprite.Texture = Texture;
 		}
 		

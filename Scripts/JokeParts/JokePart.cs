@@ -23,23 +23,26 @@ namespace GGJ24.Scripts.JokeParts
 		public override void _Ready()
 		{
 			var jokePartOperationFactory = GetNode<JokePartOperationFactory>("%JokePartOperationFactory");
-			if (jokePartOperationFactory != null)
-			{
-				Operation = jokePartOperationFactory.Create(OperationType);
-				AddChild(Operation);
-			}
-
 			var shapesStorage = GetNode<ShapesStorage>("%ShapesStorage");
 			var shapeSprite = GetNode<Sprite>("%ShapeSprite");
-			if (shapesStorage != null && shapeSprite != null)
+			if (jokePartOperationFactory == null || shapesStorage == null || shapeSprite == null)
 			{
-				var shapeData = shapesStorage.GetShape(Shape);
-				if (shapeData != null)
-				{
-					shapeSprite.Texture = shapeData.Texture;
-				}
+				return;
+			}
 
-				shapeSprite.Scale = new Vector2(2, 2);
+			var shapeData = shapesStorage.GetShape(Shape);
+			if (shapeData == null)
+			{
+				return;
+			}
+
+			shapeSprite.Texture = shapeData.JokePartShapeTexture;
+
+			Operation = jokePartOperationFactory.Create(OperationType);
+			if (Operation != null)
+			{
+				Operation.TextureOffset = shapeData.JokePartOperationTextureOffset;
+				AddChild(Operation);
 			}
 		}
 		
