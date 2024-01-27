@@ -1,4 +1,5 @@
 using System;
+using GGJ24.Scripts;
 using Godot;
 using Godot.Collections;
 
@@ -6,12 +7,21 @@ namespace GGJ24.Scenes
 {
     public class Robot : Node2D
     {
-        [Export]
-        private Color RobotColor = Color.TYPE1;
+        [Export] private Color _robotColor = Color.TYPE1;
     
-        [Export]
-        private Shape RobotShape = Shape.TYPE1;
-        
+        [Export] private Shape _robotShape = Shape.TYPE1;
+
+        //Clamped to [0,1]
+        private float _fun = 0.5f;
+        [Export] private float _lowFunMargin = 0.2f;
+
+        [Signal] public delegate void LowFunReached(Robot robot);
+        private bool _bLowFunSignaled = false;
+
+        private int _boredom = 0;
+
+        [Export] private Dictionary<int, float> _boredomLevelsToFunDebuff;
+        [Signal] public delegate void NewBoredomLevelReached(Robot robot);
         
         //TODO: rename all of this
         [Export]
@@ -32,7 +42,7 @@ namespace GGJ24.Scenes
         {
             var sprite = GetChild<Sprite>(0);
 
-            switch (RobotColor)
+            switch (_robotColor)
             {
                 case Color.TYPE1:
                     sprite.Modulate = FirstColor;
@@ -44,7 +54,7 @@ namespace GGJ24.Scenes
                     throw new ArgumentOutOfRangeException();
             }
 
-            switch (RobotShape)
+            switch (_robotShape)
             {
                 case Shape.TYPE1:
                     sprite.Texture = FirstShapeTexture;
@@ -56,6 +66,65 @@ namespace GGJ24.Scenes
                 
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void SetActive(bool newActive)
+        {
+            Visible = newActive;
+            
+            //stop all logic
+            //stop signals from firing
+        }
+
+        public bool ReceiveJoke(Joke joke)
+        {
+            //foreach (var VARIABLE in joke.Parts)
+            {
+                //joke
+            }
+            return false;
+        }
+
+        //TODO: Subscribe this to JokePartAdd delegate
+        private void OnJokePartAdded()
+        {
+            if (false /*this joke part relates to us*/)
+            {
+                _boredom = 0;
+                EmitSignal(nameof(NewBoredomLevelReached), this);
+
+                return;
+            }
+
+            int currentLevel = 0;
+
+            foreach (var pair in _boredomLevelsToFunDebuff)
+            {
+                if (pair.Key <= _boredom)
+                {
+                    currentLevel = pair.Key;
+                }
+                else break;
+            }
+
+            AddFun(-_boredomLevelsToFunDebuff[currentLevel]);
+        }
+
+        public void AddFun(float deltaFun)
+        {
+            _fun -= deltaFun;
+
+            Mathf.Clamp(_fun, 0, 1);
+
+            if (_fun <= _lowFunMargin && !_bLowFunSignaled)
+            {
+                EmitSignal(nameof(LowFunReached), this);
+                _bLowFunSignaled = true;
+            }
+            else if (_fun > _lowFunMargin)
+            {
+                _bLowFunSignaled = false;
             }
         }
 

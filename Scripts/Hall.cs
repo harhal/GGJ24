@@ -11,11 +11,11 @@ public class Hall : Node2D
 	[Export] public int HallWidth = 5;
 	[Export] public int HallDepth = 3;
 
-	private int[,] _robots;
+	private Robot[,] _robots;
 
 	public void Register(Robot inRobot)
 	{
-		_robots[0, 0] = 1;
+		//_robots[0, 0] = 1;
 	}
 
 	// Called when the node enters the scene tree for the first time.
