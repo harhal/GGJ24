@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/Bots/CircleBot.tscn" type="PackedScene" id=5]
 
 [node name="ChildSquareBot" instance=ExtResource( 5 )]
+_robotShape = 3
 
 [node name="Chair" parent="." index="1"]
 texture = ExtResource( 3 )

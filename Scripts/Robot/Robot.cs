@@ -54,7 +54,7 @@ namespace GGJ24.Scripts
 		
 		private void _on_joke_part_added(JokePart part)
 		{
-			if (false /*this joke part relates to us*/)
+			if (part.Color == _robotColor || part.Shape == _robotShape)
 			{
 				_boredom = 0;
 				EmitSignal(nameof(NewBoredomLevelReached), this);
@@ -62,7 +62,7 @@ namespace GGJ24.Scripts
 				return;
 			}
 
-			int currentLevel = 0;
+			var currentLevel = 0;
 
 			foreach (var pair in _boredomLevelsToFunDebuff)
 			{
@@ -84,7 +84,7 @@ namespace GGJ24.Scripts
 			}
 			
 			GD.Print("Haha!");
-			AddFun(0.1f);
+			//AddFun(0.1f);
 			return false;
 		}
 
@@ -95,14 +95,16 @@ namespace GGJ24.Scripts
 				return;
 			}
 			
-			_fun += deltaFun;
+			_fun = Mathf.Clamp(_fun + deltaFun, 0, 1);
 
-			Mathf.Clamp(_fun, 0, 1);
-
-			if (_fun <= _lowFunMargin && !_bLowFunSignaled)
+			if (_fun <= _lowFunMargin)
 			{
-				EmitSignal(nameof(LowFunReached), this);
-				_bLowFunSignaled = true;
+				if (!_bLowFunSignaled)
+				{
+					EmitSignal(nameof(LowFunReached), this);
+					_bLowFunSignaled = true;
+				}
+
 				_mainSprite.Frame = 1;
 				_glareSprite.Frame = 1;
 
