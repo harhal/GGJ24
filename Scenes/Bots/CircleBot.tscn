@@ -30,6 +30,7 @@ texture = ExtResource( 2 )
 texture = ExtResource( 5 )
 
 [node name="MainSprite" type="Sprite" parent="."]
+unique_name_in_owner = true
 texture = ExtResource( 4 )
 
 [node name="Glare" type="Sprite" parent="."]
