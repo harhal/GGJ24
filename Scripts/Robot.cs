@@ -14,7 +14,13 @@ namespace GGJ24.Scripts
         [Export] public uint seat = 0;
 
         //Clamped to [0,1]
-        private float _fun = 0.5f;
+        private float _fun;
+        public float GetFun()
+        {
+            return _fun;
+        }
+
+        [Export] private float _startingFun = 0.7f;
         [Export] private float _lowFunMargin = 0.2f;
 
         [Signal] public delegate void LowFunReached(Robot robot);
@@ -42,6 +48,8 @@ namespace GGJ24.Scripts
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
+            _fun = _startingFun;
+            
             var sprite = GetChild<Sprite>(0);
 
             return;
@@ -56,7 +64,6 @@ namespace GGJ24.Scripts
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
             switch (_robotShape)
             {
                 case Shape.Circle:
@@ -88,6 +95,7 @@ namespace GGJ24.Scripts
             }
             
             GD.Print("Haha!");
+            AddFun(0.1f);
             return false;
         }
 
@@ -118,7 +126,7 @@ namespace GGJ24.Scripts
 
         public void AddFun(float deltaFun)
         {
-            _fun -= deltaFun;
+            _fun += deltaFun;
 
             Mathf.Clamp(_fun, 0, 1);
 
