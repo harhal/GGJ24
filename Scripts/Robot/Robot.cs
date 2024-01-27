@@ -84,7 +84,7 @@ namespace GGJ24.Scripts
 			}
 			
 			GD.Print("Haha!");
-			//AddFun(0.1f);
+			AddFun(0.1f);
 			return false;
 		}
 
