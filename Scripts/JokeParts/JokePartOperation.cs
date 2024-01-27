@@ -27,7 +27,6 @@ namespace GGJ24.Scripts.JokeParts
 		public JokePartOperationType Type;
 		protected Texture Texture;
 		protected JokePartProcessPhase ProcessPhase;
-		protected string LabelText;
 		
 		// state:
 		public Vector2 TextureOffset;
