@@ -34,6 +34,8 @@ public class JokeAssembler : Node2D
 	private float TransitionProgress = 1f;
 
 	public static JokeAssembler StaticAssembler;
+	
+	[Signal] public delegate void JokePartAdded(JokePart jokePart);
 
 	public JokeAssembler()
 	{
@@ -61,7 +63,7 @@ public class JokeAssembler : Node2D
 		JokePart NewJokePart = Element as JokePart;
 		if (!AssembledJoke.AddPart(NewJokePart))
 		{
-			//Call failed
+			return false;
 		}
 		
 		AddChild(Element);
@@ -73,6 +75,8 @@ public class JokeAssembler : Node2D
 		{
 			IsLocked = true;
 		}
+		
+		EmitSignal(nameof(JokePartAdded), NewJokePart);
 
 		return true;
 	}
