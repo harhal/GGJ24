@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/JokeParts/JokePart.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/JokeParts/JokePartOperationFactory.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/ShapesStorage.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/ColorsStorage.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 150.92
@@ -14,6 +15,9 @@ script = ExtResource( 1 )
 unique_name_in_owner = true
 
 [node name="ShapesStorage" parent="." instance=ExtResource( 3 )]
+unique_name_in_owner = true
+
+[node name="ColorsStorage" parent="." instance=ExtResource( 4 )]
 unique_name_in_owner = true
 
 [node name="ShapeSprite" type="Sprite" parent="."]

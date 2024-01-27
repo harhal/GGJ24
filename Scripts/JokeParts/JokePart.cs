@@ -24,6 +24,7 @@ namespace GGJ24.Scripts.JokeParts
 		{
 			var jokePartOperationFactory = GetNode<JokePartOperationFactory>("%JokePartOperationFactory");
 			var shapesStorage = GetNode<ShapesStorage>("%ShapesStorage");
+			var colorsStorage = GetNode<ColorsStorage>("%ColorsStorage");
 			var shapeSprite = GetNode<Sprite>("%ShapeSprite");
 			if (jokePartOperationFactory == null || shapesStorage == null || shapeSprite == null)
 			{
@@ -31,12 +32,14 @@ namespace GGJ24.Scripts.JokeParts
 			}
 
 			var shapeData = shapesStorage.GetShape(Shape);
-			if (shapeData == null)
+			var colorData = colorsStorage.GetColor(Color);
+			if (shapeData == null || colorData == null)
 			{
 				return;
 			}
 
 			shapeSprite.Texture = shapeData.JokePartShapeTexture;
+			shapeSprite.Modulate = colorData.Color;
 
 			Operation = jokePartOperationFactory.Create(OperationType);
 			if (Operation != null)
