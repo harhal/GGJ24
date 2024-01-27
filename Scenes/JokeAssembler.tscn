@@ -1,14 +1,17 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Resources/icon.svg" type="Texture" id=1]
 [ext_resource path="res://Scripts/JokeAssembler.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/JokeParts/JokePartTip.tscn" type="PackedScene" id=3]
 
 [node name="JokeAssembler" type="Node2D"]
 scale = Vector2( 0.16, 0.68 )
 script = ExtResource( 2 )
 BasePlacePath = NodePath("Place root")
-HorizontalSpace = 1500.0
+HorizontalSpace = 200.0
 TransitionTime = 0.3
+Tip = ExtResource( 3 )
+TipOffset = 190.0
 
 [node name="Background" type="Sprite" parent="."]
 visible = false

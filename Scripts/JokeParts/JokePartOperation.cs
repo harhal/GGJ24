@@ -7,8 +7,17 @@ namespace GGJ24.Scripts.JokeParts
 	{
 		None,
 		AddOne,
-		MultiplyTwo,
+		MinusOne,
+		MinusTwo,
+		Opener,
+		Robot,
+		Human,
+		RemovePrevious,
+		CopyPrevious,
+		ChekhovGun,
+		Spoiler,
 		Punchline,
+		Joker,
 		Max
 	}
 	
@@ -26,7 +35,7 @@ namespace GGJ24.Scripts.JokeParts
 		// setup from payload:
 		public JokePartOperationType Type;
 		protected Texture Texture;
-		protected JokePartProcessPhase ProcessPhase;
+		public JokePartProcessPhase ProcessPhase;
 		
 		// state:
 		public Vector2 TextureOffset;

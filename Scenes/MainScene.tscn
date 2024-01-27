@@ -28,6 +28,7 @@ position = Vector2( 721, 0 )
 
 [node name="JokeAssembler" parent="." instance=ExtResource( 3 )]
 position = Vector2( 55, 400 )
+scale = Vector2( 1, 1 )
 
 [node name="GameStateTracker" parent="." instance=ExtResource( 5 )]
 unique_name_in_owner = true

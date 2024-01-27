@@ -1,8 +1,10 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Timers;
 using GGJ24.Scripts;
 using GGJ24.Scripts.JokeParts;
+using Timer = System.Timers.Timer;
 
 class ElementWithTransition
 {
@@ -25,6 +27,8 @@ public class JokeAssembler : Node2D
 	[Export] private float HorizontalSpace = 100f;
 	[Export] private float TransitionTime = 1f;
 	[Export] private int MaxSequenceLength = 5;
+	[Export] private PackedScene Tip;
+	[Export] private float TipOffset = 700f;
 
 	private Joke AssembledJoke;
 
@@ -133,14 +137,90 @@ public class JokeAssembler : Node2D
 
 	void PushJoke()
 	{
-		OnJokePushed();
+		Timer delay = new Timer(0.5f);
+		delay.Elapsed += (object sender, ElapsedEventArgs e) => 
+		{
+			OnJokePushed();
+			delay.Stop();
+		};
+
+		AssembledJoke.Score();
+		
+		for (int idx = 0; idx < Elements.Count; idx++)
+		{
+			Node node = Tip.Instance();
+			JokePartTip tip = node as JokePartTip;
+			AddChild(tip);
+			tip.Position = Elements[idx].DesiredLocation + Vector2.Up * TipOffset;
+
+			JokePartOperationType partType = AssembledJoke.GetPartType(idx);
+
+			string tipText = "";
+			Godot.Color tipColor = Godot.Color.ColorN("Green");
+
+			switch (partType)
+			{
+				case JokePartOperationType.AddOne:
+					tipText = "+1";
+					break;
+				case JokePartOperationType.MinusOne:
+				{
+					tipText = "-1";
+					tipColor = Godot.Color.ColorN("Orange");
+					break;
+				}
+				case JokePartOperationType.MinusTwo:
+				{
+					tipText = "-2";
+					tipColor = Godot.Color.ColorN("Orange");
+					break;
+				}
+				case JokePartOperationType.Opener:
+					tipText = idx == 0 ? "+3" : "+1";
+					break;
+				case JokePartOperationType.Robot:
+					if (AssembledJoke.IsFailed())
+					{
+						tipText = "+4";
+					}
+					else
+					{
+						tipText = "-8";
+						tipColor = Godot.Color.ColorN("Red");
+					}
+					break;
+				case JokePartOperationType.Human:
+						tipText = "+3";
+					break;
+				case JokePartOperationType.ChekhovGun:
+					tipText = "x2";
+					break;
+				case JokePartOperationType.Spoiler:
+				{
+					tipText = "F";
+					tipColor = Godot.Color.ColorN("Red");
+					break;
+				}
+				case JokePartOperationType.Punchline:
+					tipText = "x2";
+					break;
+				case JokePartOperationType.Joker:
+				{
+					tipText = "J";
+					break;
+				}
+			}
+
+			tip.SetText(tipText, tipColor);
+		}
+		
+		delay.Start();
 	}
 
 	void OnJokePushed()
 	{
 		for (int idx = 0; idx < Elements.Count; idx++)
-		{
-			ElementWithTransition Focus = Elements[idx];
+		{;
 			Elements[idx].Element.QueueFree();
 		}
 			

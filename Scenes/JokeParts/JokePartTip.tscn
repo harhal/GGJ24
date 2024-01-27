@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Resources/Fonts/Poco.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/JokePartTip.cs" type="Script" id=2]
+
+[node name="Tip" type="Node2D"]
+script = ExtResource( 2 )
+LifeTime = 1.0
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+custom_fonts/font = ExtResource( 1 )
+align = 1
+valign = 1
