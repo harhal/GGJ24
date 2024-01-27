@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Resources/Track/track_pad.png" type="Texture" id=1]
+[ext_resource path="res://Resources/Track/track_border.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Track.cs" type="Script" id=3]
+[ext_resource path="res://Scenes/TrackJokePart.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/TrackStart.cs" type="Script" id=5]
+[ext_resource path="res://Scenes/JokePartFactory.tscn" type="PackedScene" id=6]
+
+[node name="Track" type="Node2D"]
+script = ExtResource( 3 )
+TrackItemTemplate = ExtResource( 4 )
+TrackPadVelocity = 300.0
+
+[node name="TrackBorder" type="Sprite" parent="."]
+z_index = 1
+texture = ExtResource( 2 )
+
+[node name="TrackPad" type="Sprite" parent="TrackBorder"]
+unique_name_in_owner = true
+position = Vector2( -192, -1571 )
+z_index = -1
+texture = ExtResource( 1 )
+centered = false
+
+[node name="JokePartFactory" parent="." instance=ExtResource( 6 )]
+unique_name_in_owner = true
+
+[node name="TrackStart" type="Position2D" parent="."]
+unique_name_in_owner = true
+position = Vector2( 0, -380 )
+script = ExtResource( 5 )
+_horizontalSpawnDeviation = 120
+
+[node name="SpawnTimer" type="Timer" parent="."]
+unique_name_in_owner = true
