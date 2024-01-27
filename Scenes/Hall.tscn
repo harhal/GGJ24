@@ -15,4 +15,5 @@ position = Vector2( -174, -151 )
 
 [node name="Robot2" parent="." instance=ExtResource( 3 )]
 position = Vector2( -78, -147 )
+_robotShape = 2
 seat = 1
