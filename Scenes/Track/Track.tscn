@@ -1,13 +1,47 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Resources/Track/track_pad.png" type="Texture" id=1]
-[ext_resource path="res://Resources/Track/track_border.png" type="Texture" id=2]
+[ext_resource path="res://Resources/conweyoer_base.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Track/Track.cs" type="Script" id=3]
 [ext_resource path="res://Scenes/Track/TrackJokePart.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Track/TrackStart.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/JokeParts/JokePartFactory.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/GameStateTracker.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Resources/Audio/conveyor.mp3" type="AudioStream" id=8]
+[ext_resource path="res://Resources/conweyoer_3.png" type="Texture" id=9]
+[ext_resource path="res://Resources/conweyoer_roof.png" type="Texture" id=10]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Close"
+length = 0.5
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -960 ), Vector2( 0, -9 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 721, -28 ) ]
+}
 
 [node name="Track" type="Node2D"]
 script = ExtResource( 3 )
@@ -17,12 +51,26 @@ TrackItemTemplate = ExtResource( 4 )
 z_index = 2
 texture = ExtResource( 2 )
 
+[node name="Sprite" type="Sprite" parent="TrackBorder"]
+position = Vector2( 721, -28 )
+z_index = 2
+texture = ExtResource( 9 )
+
+[node name="CloseAnimation" type="AnimationPlayer" parent="TrackBorder/Sprite"]
+unique_name_in_owner = true
+anims/Close = SubResource( 1 )
+anims/RESET = SubResource( 2 )
+
 [node name="TrackPad" type="Sprite" parent="TrackBorder"]
 unique_name_in_owner = true
 position = Vector2( -192, -1571 )
-z_index = -1
+z_index = -2
 texture = ExtResource( 1 )
 centered = false
+
+[node name="Sprite2" type="Sprite" parent="TrackBorder"]
+z_index = 2
+texture = ExtResource( 10 )
 
 [node name="TrackStart" type="Position2D" parent="."]
 unique_name_in_owner = true

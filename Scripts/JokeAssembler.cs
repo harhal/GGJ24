@@ -41,6 +41,10 @@ public class JokeAssembler : Node2D
 	private List<ElementWithTransition> Elements;
 	private float TransitionProgress = 1f;
 
+	public delegate void onLockChangedDelegate(bool bLocked);
+
+	public event onLockChangedDelegate OnLockChanged;
+
 	public static JokeAssembler StaticAssembler;
 	
 	[Signal] public delegate void JokePartAdded(JokePart jokePart);
@@ -143,6 +147,9 @@ public class JokeAssembler : Node2D
 
 	void PushJoke()
 	{
+		if (OnLockChanged != null) 
+			OnLockChanged.Invoke(true);
+		
 		AssembledJoke.Score();
 		
 		for (int idx = 0; idx < Elements.Count; idx++)
@@ -270,6 +277,9 @@ public class JokeAssembler : Node2D
 	void OnJokePushed()
 	{
 		AssembledJoke = new Joke(MaxSequenceLength);
+		
+		if (OnLockChanged != null) 
+			OnLockChanged.Invoke(false);
 		
 		for (int idx = 0; idx < Elements.Count; idx++)
 		{

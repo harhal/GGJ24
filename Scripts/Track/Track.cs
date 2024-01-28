@@ -25,6 +25,8 @@ namespace GGJ24.Scripts.Track
 		private Vector2 _trackPadStartPosition;
 		private const float TrackPadLengthClampPoint = 1141;
 
+		private AnimationPlayer _animationPlayer;
+
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
@@ -40,6 +42,13 @@ namespace GGJ24.Scripts.Track
 			GameStateTracker = GetNode<GameStateTracker>("%GameStateTracker");
 			GameStateTracker.Connect(nameof(GameStateTracker.GameStateChanged), this,
 				"_on_GameStateTracker_GameStateChanged");
+
+			_animationPlayer = GetNode<AnimationPlayer>("%CloseAnimation");
+
+			JokeAssembler.StaticAssembler.OnLockChanged += locked =>
+			{
+				_animationPlayer.Play("Close",-1f, locked ? 1 : -1, !locked);
+			};
 
 			StartSpawnTimer();
 		}
