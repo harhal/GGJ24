@@ -12,7 +12,7 @@ script = ExtResource( 4 )
 [node name="Hall" parent="." instance=ExtResource( 1 )]
 unique_name_in_owner = true
 
-[node name="Button" type="Button" parent="."]
+[node name="AddButton" type="Button" parent="."]
 margin_left = -458.0
 margin_top = 290.0
 margin_right = -67.0
@@ -29,8 +29,18 @@ position = Vector2( 721, 0 )
 [node name="JokeAssembler" parent="." instance=ExtResource( 3 )]
 position = Vector2( 55, 400 )
 scale = Vector2( 1, 1 )
+Tip = null
+TipOffset = 700.0
 
 [node name="GameStateTracker" parent="." instance=ExtResource( 5 )]
 unique_name_in_owner = true
 
-[connection signal="pressed" from="Button" to="Hall" method="_on_Button_pressed"]
+[node name="SubButton" type="Button" parent="."]
+margin_left = 115.0
+margin_top = 137.0
+margin_right = 506.0
+margin_bottom = 247.0
+text = "Joke"
+
+[connection signal="pressed" from="AddButton" to="Hall" method="_on_AddButton_pressed"]
+[connection signal="pressed" from="SubButton" to="Hall" method="_on_SubButton_pressed"]

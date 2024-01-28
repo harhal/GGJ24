@@ -12,6 +12,7 @@ namespace GGJ24.Scripts
 		{
 			_hall = GetNode<Hall>("%Hall");
 			_hall.Connect(nameof(Hall.AllRobotsCompletedFun), this, "_on_Hall_AllRobotsCompletedFun");
+			_hall.Connect(nameof(Hall.MostRobotsGotLowFun), this, "_on_Hall_MostRobotsGotLowFun");
 
 			_gameStateTracker = GetNode<GameStateTracker>("%GameStateTracker");
 		}
@@ -19,6 +20,11 @@ namespace GGJ24.Scripts
 		private void _on_Hall_AllRobotsCompletedFun()
 		{
 			_gameStateTracker?.SetState(GameState.Won);
+		}
+		
+		private void _on_Hall_MostRobotsGotLowFun()
+		{
+			_gameStateTracker?.SetState(GameState.Lost);
 		}
 
 	}

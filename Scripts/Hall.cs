@@ -7,13 +7,17 @@ public class Hall : Node2D
 	[Export] public int HallWidth = 5;
 	[Export] public int HallDepth = 3;
 	
+	[Export] private int _lowFunRobotsToLose = 9;
+	
 	[Signal] public delegate void AllRobotsCompletedFun();
+	[Signal] public delegate void MostRobotsGotLowFun();
 
 	private const int RobotsCount = 12;
 	private Robot[] _robots = new Robot[RobotsCount];
 
 	private int _lastAddedIndex = 0;
 	private int _completedFunRobots = 0;
+	private int _lowFunRobots = 0;
 
 	public void Register(Robot inRobot)
 	{
@@ -47,15 +51,37 @@ public class Hall : Node2D
 				EmitSignal(nameof(AllRobotsCompletedFun));
 			}
 		}
+
+		if (newFunLevel == FunLevel.Low)
+		{
+			_lowFunRobots++;
+		}
+		
+		if (previousFunLevel == FunLevel.Low)
+		{
+			_lowFunRobots--;
+		}
+
+		if (_lowFunRobots >= _lowFunRobotsToLose)
+		{
+			GD.Print("MOST ROBOTS GOT LOW FUN");
+			EmitSignal(nameof(MostRobotsGotLowFun));
+		}
 	}
 	
-	private void _on_Button_pressed()
+	private void _on_SubButton_pressed()
 	{
-		// Replace with function body.
 		for (var i = 0; i < RobotsCount; i++)
 		{
-			Joke joke = new Joke(4);
-			_robots[i].ReceiveJoke(joke);
+			_robots[i].AddFun(-0.1f);
+		}
+	}
+
+	private void _on_AddButton_pressed()
+	{
+		for (var i = 0; i < RobotsCount; i++)
+		{
+			_robots[i].AddFun(0.1f);
 		}
 	}
 
@@ -65,6 +91,4 @@ public class Hall : Node2D
 //      
 //  }
 }
-
-
 
