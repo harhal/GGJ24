@@ -5,5 +5,5 @@
 
 [resource]
 script = ExtResource( 2 )
-Type = 11
+Type = 10
 EmojiTextures = [ ExtResource( 1 ) ]
