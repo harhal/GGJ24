@@ -45,6 +45,10 @@ public class JokeAssembler : Node2D
 
 	public event onLockChangedDelegate OnLockChanged;
 
+	public delegate void onJokeFailedDelegate();
+
+	public event onJokeFailedDelegate OnJokeFailedDelegate;
+
 	public static JokeAssembler StaticAssembler;
 	
 	[Signal] public delegate void JokePartAdded(JokePart jokePart);
@@ -149,8 +153,11 @@ public class JokeAssembler : Node2D
 	{
 		if (OnLockChanged != null) 
 			OnLockChanged.Invoke(true);
-		
+
 		AssembledJoke.Score();
+
+		if (OnJokeFailedDelegate != null && AssembledJoke.IsFailed())
+			OnJokeFailedDelegate.Invoke();
 		
 		for (int idx = 0; idx < Elements.Count; idx++)
 		{

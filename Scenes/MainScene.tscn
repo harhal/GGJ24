@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Scenes/Hall.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Track/Track.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/GameStateTracker.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Resources/Audio/Melodyayresgriffiths - Beyond.mp3" type="AudioStream" id=6]
 [ext_resource path="res://Scenes/JokeParts/JokePartTip.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scripts/BooPlayer.cs" type="Script" id=8]
 [ext_resource path="res://Scripts/JokeLiner.cs" type="Script" id=9]
 [ext_resource path="res://Resources/Audio/JokeLines/Jok8.wav" type="AudioStream" id=10]
 [ext_resource path="res://Resources/Audio/JokeLines/Jok11.wav" type="AudioStream" id=11]
@@ -26,6 +27,9 @@
 [ext_resource path="res://Resources/Audio/JokeLines/Jok14.wav" type="AudioStream" id=25]
 [ext_resource path="res://Resources/Audio/JokeLines/Jok3.wav" type="AudioStream" id=26]
 [ext_resource path="res://Resources/Audio/JokeLines/Jok1.wav" type="AudioStream" id=27]
+[ext_resource path="res://Resources/Audio/Boo/Boo2.wav" type="AudioStream" id=28]
+[ext_resource path="res://Resources/Audio/Boo/Boo3.wav" type="AudioStream" id=29]
+[ext_resource path="res://Resources/Audio/Boo/Boo1.wav" type="AudioStream" id=30]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 4 )
@@ -72,6 +76,10 @@ autoplay = true
 pitch_scale = 1.7
 script = ExtResource( 9 )
 _audioSamples = [ ExtResource( 27 ), ExtResource( 14 ), ExtResource( 26 ), ExtResource( 19 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 15 ), ExtResource( 10 ), ExtResource( 23 ), ExtResource( 22 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 12 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 16 ) ]
+
+[node name="BooPlayer" type="AudioStreamPlayer2D" parent="."]
+script = ExtResource( 8 )
+_audioSamples = [ ExtResource( 30 ), ExtResource( 28 ), ExtResource( 29 ) ]
 
 [connection signal="JokePartAdded" from="JokeAssembler" to="." method="_on_JokeAssembler_JokePartAdded"]
 [connection signal="pressed" from="AddButton" to="Hall" method="_on_AddButton_pressed"]
