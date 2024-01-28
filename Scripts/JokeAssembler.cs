@@ -34,8 +34,6 @@ public class JokeAssembler : Node2D
 
 	private Joke AssembledJoke;
 
-	private bool IsLocked = false;
-
 	private List<ElementWithTransition> Elements;
 	private float TransitionProgress = 1f;
 
@@ -50,7 +48,12 @@ public class JokeAssembler : Node2D
 
 	public bool AddElement(Node2D Element)
 	{
-		if (IsLocked)
+		if (AssembledJoke == null)
+		{
+			AssembledJoke = new Joke(MaxSequenceLength);
+		}
+		
+		if (AssembledJoke.IsFinished())
 		{
 			return false;
 		}
@@ -59,11 +62,6 @@ public class JokeAssembler : Node2D
 		if (Element.GetParent() != null)
 		{
 			Element.GetParent().RemoveChild(Element);
-		}
-
-		if (AssembledJoke == null)
-		{
-			AssembledJoke = new Joke(MaxSequenceLength);
 		}
 
 		JokePart NewJokePart = Element as JokePart;
@@ -76,11 +74,6 @@ public class JokeAssembler : Node2D
 		Element.GlobalTransform = GlobalTransform;
 		Elements.Add(new ElementWithTransition(Element, Element.Position, Element.Position));
 		UpdateDesiredLocations();
-
-		if (AssembledJoke.IsFinished())
-		{
-			IsLocked = true;
-		}
 		
 		EmitSignal(nameof(JokePartAdded), NewJokePart);
 
@@ -242,8 +235,8 @@ public class JokeAssembler : Node2D
 		
 		float startTimeMs = Time.GetTicksMsec();
 		
-		Timer delay = new Timer(1f);
-		delay.Elapsed += (object sender, ElapsedEventArgs e) => 
+		Timer fadeOutTimer = new Timer(10f);
+		fadeOutTimer.Elapsed += (object sender, ElapsedEventArgs e) => 
 		{
 			float localTime = (Time.GetTicksMsec() - startTimeMs) / 1000f;
 			float progress = Mathf.InverseLerp(0, FadeoutTime, localTime);
@@ -254,23 +247,26 @@ public class JokeAssembler : Node2D
 			
 			if (localTime >= FadeoutTime)
 			{
+				(sender as Timer).Stop();
+				(sender as Timer).Dispose();
 				OnJokePushed();
-				delay.Dispose();
 			}
 		};
-		delay.Start();
+		fadeOutTimer.Start();
 	}
 
 	void OnJokePushed()
 	{
+		AssembledJoke = new Joke(MaxSequenceLength);
+		
 		for (int idx = 0; idx < Elements.Count; idx++)
-		{;
+		{
 			Elements[idx].Element.QueueFree();
 		}
+		
+		Hall.StaticHall.PushJoke(AssembledJoke);
 			
 		Elements.Clear();
-		AssembledJoke = new Joke(MaxSequenceLength);
-		IsLocked = false;
 
 		Modulate = Godot.Color.ColorN("White");
 	}

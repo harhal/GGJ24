@@ -34,7 +34,7 @@ namespace GGJ24.Scripts.JokeParts
 		private const double SpriteRotationDeviation = Math.PI / 4;
 		// setup from payload:
 		public JokePartOperationType Type;
-		protected Texture Texture;
+		public Texture Texture;
 		// public JokePartProcessPhase ProcessPhase;
 
 		// state:

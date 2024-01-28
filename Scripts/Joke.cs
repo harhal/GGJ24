@@ -196,7 +196,7 @@ namespace GGJ24.Scripts
 		{
 			foreach (JokePart part in Parts)
 			{
-				if (part != newPart && part.OperationType == newPart.OperationType)
+				if (part != newPart && part.Operation.Texture == newPart.Operation.Texture)
 				{
 					return true;
 				}
