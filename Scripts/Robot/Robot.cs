@@ -84,18 +84,9 @@ namespace GGJ24.Scripts.Robot
                 return;
             }
 
-            var currentLevel = 0;
+            _boredom++;
 
-            foreach (var pair in _boredomLevelsToFunDebuff)
-            {
-                if (pair.Key <= _boredom)
-                {
-                    currentLevel = pair.Key;
-                }
-                else break;
-            }
-
-            AddFun(-_boredomLevelsToFunDebuff[currentLevel]);
+            AddFun(-_boredomLevelsToFunDebuff[_boredom]);
         }
 
 		public float ReceiveJoke(Joke joke)
