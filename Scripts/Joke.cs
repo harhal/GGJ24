@@ -3,15 +3,23 @@ using System.Linq;
 using GGJ24.Scripts.JokeParts;
 using Godot;
 
+public enum FinishReason
+{
+	InAssemble,
+	Full,
+	Punchline,
+	Mismatch,
+	Repeat,
+	Spoiled
+}
+
 namespace GGJ24.Scripts
 {
 	public class Joke
 	{
 		public int MaxSequenceLength = 1;
 
-		private bool bIsFinished = false;
-
-		private bool bIsFailed = false;
+		private FinishReason _finishReason = FinishReason.InAssemble;
 	
 		private List<JokePart> Parts = new List<JokePart>();
 		
@@ -23,34 +31,6 @@ namespace GGJ24.Scripts
 		public float Score()
 		{
 			float TotalScore = 0f;
-			
-			//PreCycle
-			for (int idx = 1; idx < Parts.Count; idx++)
-			{
-				switch (Parts[idx].OperationType)
-				{
-					case JokePartOperationType.CopyPrevious:
-					{
-						Parts[idx].OperationType = Parts[idx - 1].OperationType;
-						break;
-					}
-						
-					case JokePartOperationType.RemovePrevious:
-					{
-						Parts[idx - 1].OperationType = JokePartOperationType.None;
-						break;
-					}
-						
-					case JokePartOperationType.ChekhovGun:
-					{
-						if (Parts[Parts.Count - 1].OperationType != JokePartOperationType.Punchline)
-						{
-							Parts[idx].OperationType = JokePartOperationType.Spoiler;
-						}
-						break;
-					}
-				}
-			}
 
 			float Multiplyer = 1;
 			//MultiplyersCycle
@@ -64,21 +44,15 @@ namespace GGJ24.Scripts
 						break;
 					}
 
-					case JokePartOperationType.ChekhovGun:
+					case JokePartOperationType.Double:
 					{
 						Multiplyer *= 2;
-						break;
-					}
-
-					case JokePartOperationType.Spoiler:
-					{
-						bIsFailed = true;
 						break;
 					}
 				}
 			}
 
-			//MainCycle
+			//Success cycle
 			for (int idx = 1; idx < Parts.Count; idx++)
 			{
 				switch (Parts[idx].OperationType)
@@ -90,7 +64,7 @@ namespace GGJ24.Scripts
 							CringeLevelScript.StaticCringe.AddCringe(5);
 						}
 
-						if (!bIsFailed)
+						if (!IsFailed())
 						{
 							TotalScore += 3;
 						}
@@ -99,7 +73,7 @@ namespace GGJ24.Scripts
 
 					case JokePartOperationType.Opener:
 					{
-						if (!bIsFailed)
+						if (!IsFailed())
 						{
 							TotalScore += (idx == 0) ? 3 : 1;
 						}
@@ -108,7 +82,7 @@ namespace GGJ24.Scripts
 
 					case JokePartOperationType.AddOne:
 					{
-						if (!bIsFailed)
+						if (!IsFailed())
 						{
 							TotalScore += 1;
 						}
@@ -129,7 +103,7 @@ namespace GGJ24.Scripts
 
 					case JokePartOperationType.Robot:
 					{
-						if (!bIsFailed)
+						if (!IsFailed())
 						{
 							TotalScore += 4;
 						}
@@ -157,6 +131,16 @@ namespace GGJ24.Scripts
 			
 			Parts.Add(newJokePart);
 
+			if (Parts.Count >= MaxSequenceLength)
+			{
+				_finishReason = FinishReason.Full;
+			}
+			
+			if (newJokePart.OperationType == JokePartOperationType.Punchline)
+			{
+				_finishReason = FinishReason.Punchline;
+			}
+
 			bool bMatchByColor = lastPart.Color == newJokePart.Color;
 			bool bMatchByShape = lastPart.Shape == newJokePart.Shape;
 
@@ -165,26 +149,38 @@ namespace GGJ24.Scripts
 
 			if (!bMatchByColor && !bMatchByShape && !bJoker)
 			{
-				bIsFailed = true;
-				newJokePart.OperationType = JokePartOperationType.Spoiler;
+				_finishReason = FinishReason.Mismatch;
 			}
-			
-			if (Parts.Count >= MaxSequenceLength)
+
+			if (IsRepeat(newJokePart))
 			{
-				bIsFinished = true;
+				_finishReason = FinishReason.Repeat;
 			}
-			
-			if (newJokePart.OperationType == JokePartOperationType.Punchline)
+
+			if (newJokePart.OperationType == JokePartOperationType.Spoiler)
 			{
-				bIsFinished = true;
+				_finishReason = FinishReason.Spoiled;
 			}
 			
 			return true;
 		}
 
+		bool IsRepeat(JokePart newPart)
+		{
+			foreach (JokePart part in Parts)
+			{
+				if (part != newPart && part.OperationType == newPart.OperationType)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		public bool IsFinished()
 		{
-			return bIsFinished || bIsFailed;
+			return _finishReason != FinishReason.InAssemble;
 		}
 
 		public JokePartOperationType GetPartType(int idx)
@@ -199,7 +195,12 @@ namespace GGJ24.Scripts
 
 		public bool IsFailed()
 		{
-			return bIsFailed;
+			return _finishReason != FinishReason.InAssemble && _finishReason != FinishReason.Full && _finishReason != FinishReason.Punchline;
+		}
+
+		public FinishReason GetFinishReason()
+		{
+			return _finishReason;
 		}
 	}
 }

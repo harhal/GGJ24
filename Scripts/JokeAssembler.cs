@@ -29,6 +29,8 @@ public class JokeAssembler : Node2D
 	[Export] private int MaxSequenceLength = 5;
 	[Export] private PackedScene Tip;
 	[Export] private float TipOffset = 700f;
+	[Export] private float FadeoutTime = 1f;
+
 
 	private Joke AssembledJoke;
 
@@ -137,19 +139,11 @@ public class JokeAssembler : Node2D
 
 	void PushJoke()
 	{
-		Timer delay = new Timer(0.5f);
-		delay.Elapsed += (object sender, ElapsedEventArgs e) => 
-		{
-			OnJokePushed();
-			delay.Stop();
-		};
-
 		AssembledJoke.Score();
 		
 		for (int idx = 0; idx < Elements.Count; idx++)
 		{
-			Node node = Tip.Instance();
-			JokePartTip tip = node as JokePartTip;
+			JokePartTip tip = Tip.InstanceOrNull<JokePartTip>();
 			AddChild(tip);
 			tip.Position = Elements[idx].DesiredLocation + Vector2.Up * TipOffset;
 
@@ -161,22 +155,42 @@ public class JokeAssembler : Node2D
 			switch (partType)
 			{
 				case JokePartOperationType.AddOne:
-					tipText = "+1";
+					if (!AssembledJoke.IsFailed())
+						tipText = "+1";
+					break;
+				case JokePartOperationType.AddTwo:
+					if (!AssembledJoke.IsFailed())
+						tipText = "+2";
 					break;
 				case JokePartOperationType.MinusOne:
 				{
 					tipText = "-1";
-					tipColor = Godot.Color.ColorN("Orange");
+					tipColor = Godot.Color.ColorN("Red");
 					break;
 				}
 				case JokePartOperationType.MinusTwo:
 				{
 					tipText = "-2";
-					tipColor = Godot.Color.ColorN("Orange");
+					tipColor = Godot.Color.ColorN("Red");
 					break;
 				}
+				case JokePartOperationType.Double:
+					tipText = "x2";
+					break;
 				case JokePartOperationType.Opener:
-					tipText = idx == 0 ? "+3" : "+1";
+					if (!AssembledJoke.IsFailed())
+					{
+						if (idx == 0)
+						{
+							tipText = "+3";
+						}
+						else
+						{
+							tipText = "+1";
+							tipColor = Godot.Color.ColorN("Yellow");
+						}
+					}
+
 					break;
 				case JokePartOperationType.Robot:
 					if (AssembledJoke.IsFailed())
@@ -190,30 +204,60 @@ public class JokeAssembler : Node2D
 					}
 					break;
 				case JokePartOperationType.Human:
+					if (!AssembledJoke.IsFailed())
 						tipText = "+3";
 					break;
-				case JokePartOperationType.ChekhovGun:
-					tipText = "x2";
-					break;
-				case JokePartOperationType.Spoiler:
-				{
-					tipText = "F";
-					tipColor = Godot.Color.ColorN("Red");
-					break;
-				}
 				case JokePartOperationType.Punchline:
 					tipText = "x2";
 					break;
-				case JokePartOperationType.Joker:
-				{
-					tipText = "J";
-					break;
-				}
 			}
 
-			tip.SetText(tipText, tipColor);
+			tip.SetText(tipText, tipColor, FadeoutTime);
+		}
+
+		if (AssembledJoke.IsFailed())
+		{
+			Modulate = Godot.Color.ColorN("Red");
+			
+			JokePartTip tip = Tip.InstanceOrNull<JokePartTip>();
+			AddChild(tip);
+			tip.Position = Elements[Elements.Count - 1].DesiredLocation;
+
+			string tipText = "";
+			switch (AssembledJoke.GetFinishReason())
+			{
+				case FinishReason.Mismatch:
+					tipText = "Missmatch";
+					break;
+				case FinishReason.Repeat:
+					tipText = "Repeate";
+					break;
+				case FinishReason.Spoiled:
+					tipText = "Spoiled";
+					break;
+			}
+			
+			tip.SetText(tipText, Godot.Color.ColorN("Red"), FadeoutTime);
 		}
 		
+		float startTimeMs = Time.GetTicksMsec();
+		
+		Timer delay = new Timer(1f);
+		delay.Elapsed += (object sender, ElapsedEventArgs e) => 
+		{
+			float localTime = (Time.GetTicksMsec() - startTimeMs) / 1000f;
+			float progress = Mathf.InverseLerp(0, FadeoutTime, localTime);
+			float alpha = Mathf.Sqrt(1f - progress);
+			Godot.Color newModulate = Modulate;
+			newModulate.a = alpha;
+			Modulate = newModulate;
+			
+			if (localTime >= FadeoutTime)
+			{
+				OnJokePushed();
+				delay.Dispose();
+			}
+		};
 		delay.Start();
 	}
 
@@ -227,5 +271,7 @@ public class JokeAssembler : Node2D
 		Elements.Clear();
 		AssembledJoke = new Joke(MaxSequenceLength);
 		IsLocked = false;
+
+		Modulate = Godot.Color.ColorN("White");
 	}
 }
