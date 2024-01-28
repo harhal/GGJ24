@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Jimgor33 - Arcade Room.mp3-761a2cf82cbc0b97a1691f68c9d82fc0.mp3str"
+
+[deps]
+
+source_file="res://Resources/Audio/Jimgor33 - Arcade Room.mp3"
+dest_files=[ "res://.import/Jimgor33 - Arcade Room.mp3-761a2cf82cbc0b97a1691f68c9d82fc0.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

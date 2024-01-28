@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Iamcarterugwell - The ID.mp3-d6c20c50f2569aa74c1e7ad393c458ae.mp3str"
+
+[deps]
+
+source_file="res://Resources/Audio/Iamcarterugwell - The ID.mp3"
+dest_files=[ "res://.import/Iamcarterugwell - The ID.mp3-d6c20c50f2569aa74c1e7ad393c458ae.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

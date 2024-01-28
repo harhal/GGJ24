@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/verbundnetzhaushalt - computer program 80s robot electro funk.mp3-fde9c2ba6ca1d2e7c0845b4b3a372f7c.mp3str"
+
+[deps]
+
+source_file="res://Resources/Audio/verbundnetzhaushalt - computer program 80s robot electro funk.mp3"
+dest_files=[ "res://.import/verbundnetzhaushalt - computer program 80s robot electro funk.mp3-fde9c2ba6ca1d2e7c0845b4b3a372f7c.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

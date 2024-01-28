@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Melodyayresgriffiths - Beyond.mp3-6a29f36a07718531912183625259507e.mp3str"
+
+[deps]
+
+source_file="res://Resources/Audio/Melodyayresgriffiths - Beyond.mp3"
+dest_files=[ "res://.import/Melodyayresgriffiths - Beyond.mp3-6a29f36a07718531912183625259507e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
