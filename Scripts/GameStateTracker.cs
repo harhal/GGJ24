@@ -38,7 +38,7 @@ namespace GGJ24.Scripts
 				
 				System.Timers.Timer closeDelay = new System.Timers.Timer();
 				closeDelay.Interval = 1f;
-				closeDelay.AutoReset = true;
+				closeDelay.AutoReset = false;
 				closeDelay.Elapsed += (sender, args) =>
 				{
 					ScenesCatalog.MoveToScene(this, GameState == GameState.Won ? _winScreenIdx : _looseScreenIdx);

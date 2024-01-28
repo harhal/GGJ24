@@ -258,7 +258,7 @@ public class JokeAssembler : Node2D
 		fadeOutTimer.Start();
 		
 		Timer pushDelay = new Timer(FadeoutTime / 2 * 1000);
-		pushDelay.AutoReset = true;
+		pushDelay.AutoReset = false;
 		pushDelay.Elapsed += (object sender, ElapsedEventArgs e) => 
 		{
 			Hall.StaticHall.PushJoke(AssembledJoke);
