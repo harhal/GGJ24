@@ -50,6 +50,8 @@ namespace GGJ24.Scripts.Robot
         private float _fadeoutStartTime = 0.2f;
         [Export] private float _reactionFadeoutTimeMsec = 1400;
 
+        public float LastAddedFun = 0.0f;
+
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
@@ -99,6 +101,7 @@ namespace GGJ24.Scripts.Robot
 		public float ReceiveJoke(Joke joke)
         {
             float baseScore = joke.GetTotalScore();
+            LastAddedFun = 0;
             if (baseScore == 0)
             {
                 return 0;
@@ -106,17 +109,30 @@ namespace GGJ24.Scripts.Robot
 
             if (baseScore < 0)
             {
+                LastAddedFun = baseScore / _maxFunToScale;
                 AddFun(baseScore / _maxFunToScale);
+                return baseScore;
             }
             
             int colorCount = joke.GetColorCount(_robotColor);
             int shapeCount = joke.GetShapeCount(_robotShape);
+
+            if (colorCount == 0 && shapeCount == 0)
+            {
+                return 0;
+            }
             
             float colorBonus = (Mathf.Pow(2, colorCount - 1) - 1) / Mathf.Pow(2, colorCount - 1);
             float shapeBonus = (Mathf.Pow(3, shapeCount - 1) - 1) / Mathf.Pow(3, shapeCount - 1);
 
+            colorBonus = Mathf.Max(colorBonus, 0);
+            shapeBonus = Mathf.Max(shapeBonus, 0);
+            
             float finalScore = baseScore + baseScore * colorBonus + baseScore * shapeBonus;
             AddFun(finalScore / _maxFunToScale);
+
+            LastAddedFun = finalScore / _maxFunToScale;
+            
             return finalScore;
 		}
 

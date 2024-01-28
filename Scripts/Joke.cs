@@ -38,28 +38,28 @@ namespace GGJ24.Scripts
 		{
 			TotalScore = 0f;
 
-			float Multiplyer = 1;
+			float multiplier = 1;
 			// MultipliersCycle
-			for (int idx = 1; idx < Parts.Count; idx++)
+			for (int idx = 0; idx < Parts.Count; idx++)
 			{
 				switch (Parts[idx].OperationType)
 				{
 					case JokePartOperationType.Punchline:
 					{
-						Multiplyer *= 2;
+						multiplier *= 2;
 						break;
 					}
 
 					case JokePartOperationType.Double:
 					{
-						Multiplyer *= 2;
+						multiplier *= 2;
 						break;
 					}
 				}
 			}
 
 			// Success cycle
-			for (int idx = 1; idx < Parts.Count; idx++)
+			for (int idx = 0; idx < Parts.Count; idx++)
 			{
 				switch (Parts[idx].OperationType)
 				{
@@ -111,18 +111,18 @@ namespace GGJ24.Scripts
 					{
 						if (!IsFailed())
 						{
-							TotalScore += 4;
+							TotalScore += 3;
 						}
 						else
 						{
-							TotalScore -= 8;
+							TotalScore -= 3;
 						}
 						break;
 					}
 				}
 			}
 
-			TotalScore *= Multiplyer;
+			TotalScore *= multiplier;
 		}
 
 		public float GetTotalScore()
@@ -218,15 +218,6 @@ namespace GGJ24.Scripts
 
 		void AddColor(Color color)
 		{
-			/*if (ColorsMap.ContainsKey(color))
-			{
-				ColorsMap[color]++;
-			}
-			else
-			{
-				ColorsMap.Add(color, 1);
-			}*/
-			                                        
 			ColorsMap[color] = GetColorCount(color) + 1; 
 		}
 
@@ -234,6 +225,7 @@ namespace GGJ24.Scripts
 		{                                  
 			ShapesMap[shape] = GetShapeCount(shape) + 1;      
 		}
+		
 		public int GetColorCount(Color color)
 		{
 			ColorsMap.TryGetValue(color, out int result);

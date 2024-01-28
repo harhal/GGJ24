@@ -21,7 +21,7 @@ public class JokePartTip : Node2D
         Label.Text = SetText;
 		
         System.Timers.Timer delay = new System.Timers.Timer(LifeTime * 1000);
-        delay.AutoReset = true;
+        delay.AutoReset = false;
         delay.Elapsed += (object sender, ElapsedEventArgs e) =>
         {
             QueueFree();
