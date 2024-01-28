@@ -7,4 +7,4 @@
 script = ExtResource( 1 )
 Shape = 2
 JokePartShapeTexture = ExtResource( 2 )
-JokePartOperationTextureOffset = Vector2( 0, 30 )
+JokePartOperationTextureOffset = Vector2( 0, 36 )
