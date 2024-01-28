@@ -68,6 +68,7 @@ frames = ExtResource( 11 )
 unique_name_in_owner = true
 
 [node name="Label" type="Label" parent="."]
+visible = false
 margin_left = -72.0
 margin_top = -192.0
 margin_right = 80.0
