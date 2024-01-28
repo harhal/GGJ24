@@ -49,6 +49,9 @@ namespace GGJ24.Scripts.Robot
 
         private float _fadeoutStartTime = 0.2f;
         [Export] private float _reactionFadeoutTimeMsec = 1400;
+        
+        private float _lastBoredomUpdate = 0.2f;
+        [Export] private float _boredomTick = 5000;
 
         public float LastAddedFun = 0.0f;
 
@@ -74,6 +77,7 @@ namespace GGJ24.Scripts.Robot
 
         private void _on_joke_part_added(JokePart part)
         {
+            _lastBoredomUpdate = Time.GetTicksMsec();
             if (part.Color == _robotColor || part.Shape == _robotShape)
             {
                 _boredom = 0;
@@ -84,18 +88,7 @@ namespace GGJ24.Scripts.Robot
                 return;
             }
 
-            var currentLevel = 0;
-
-            foreach (var pair in _boredomLevelsToFunDebuff)
-            {
-                if (pair.Key <= _boredom)
-                {
-                    currentLevel = pair.Key;
-                }
-                else break;
-            }
-
-            AddFun(-_boredomLevelsToFunDebuff[currentLevel]);
+            GetBoredOnce();
         }
 
 		public float ReceiveJoke(Joke joke)
@@ -195,11 +188,24 @@ namespace GGJ24.Scripts.Robot
             var timePassed = Time.GetTicksMsec() - _fadeoutStartTime;
 
             var passedPercent = timePassed / _reactionFadeoutTimeMsec;
-            
-            var currentOpacity = Mathf.Lerp(1, 0,passedPercent);
+
             _reactionSprite.Modulate = new Godot.Color(1, 1, 1, 1 - passedPercent);
+
+            //Boredom
+            if (Time.GetTicksMsec() - _lastBoredomUpdate > _boredomTick)
+            {
+                GetBoredOnce();
+            }
         }
 
+        private void GetBoredOnce()
+        {
+            _lastBoredomUpdate = Time.GetTicksMsec();
+            _boredom++;
 
+            var index = Mathf.Min(_boredom, _boredomLevelsToFunDebuff.Count - 1);
+
+            AddFun(-_boredomLevelsToFunDebuff[index]);
+        }
     }
 }

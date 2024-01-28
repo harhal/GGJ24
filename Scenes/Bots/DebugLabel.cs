@@ -18,6 +18,6 @@ public class DebugLabel : Label
     {
         Robot robot = GetParent<Robot>();
 
-        Text = robot.GetFun().ToString() + "\n" + robot.LastAddedFun.ToString();
+        Text = robot.GetFun().ToString().Left(3) + "\n" + robot.LastAddedFun.ToString().Left(3);
     }
 }
