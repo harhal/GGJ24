@@ -39,7 +39,7 @@ namespace GGJ24.Scripts
 			TotalScore = 0f;
 
 			float Multiplyer = 1;
-			//MultiplyersCycle
+			// MultipliersCycle
 			for (int idx = 1; idx < Parts.Count; idx++)
 			{
 				switch (Parts[idx].OperationType)
@@ -58,7 +58,7 @@ namespace GGJ24.Scripts
 				}
 			}
 
-			//Success cycle
+			// Success cycle
 			for (int idx = 1; idx < Parts.Count; idx++)
 			{
 				switch (Parts[idx].OperationType)
