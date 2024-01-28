@@ -23,9 +23,9 @@ unique_name_in_owner = true
 [node name="ShapeSprite" type="Sprite" parent="."]
 unique_name_in_owner = true
 
-[node name="Area2D" type="Area2D" parent="ShapeSprite"]
+[node name="Area2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ShapeSprite/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 1 )
 
-[connection signal="input_event" from="ShapeSprite/Area2D" to="." method="_on_Area2D_input_event"]
+[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
