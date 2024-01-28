@@ -3,7 +3,7 @@
 [ext_resource path="res://Scripts/TravelToScene.cs" type="Script" id=1]
 [ext_resource path="res://Resources/Fonts/Poco.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Scripts/Menu/ExitApp.cs" type="Script" id=4]
-[ext_resource path="res://Resources/bg (2).png" type="Texture" id=5]
+[ext_resource path="res://Resources/background.png" type="Texture" id=5]
 
 [node name="MainMenu" type="Node2D"]
 
