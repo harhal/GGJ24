@@ -29,7 +29,7 @@ public class JokeAssembler : Node2D
 	[Export] private int MaxSequenceLength = 5;
 	[Export] private PackedScene Tip;
 	[Export] private float TipOffset = 700f;
-	[Export] private float FadeoutTime = 1f;
+	[Export] private float FadeoutTime = 3f;
 
 	private Node2D BackGround;
 
