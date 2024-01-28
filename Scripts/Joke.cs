@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GGJ24.Scripts.JokeParts;
@@ -22,15 +23,20 @@ namespace GGJ24.Scripts
 		private FinishReason _finishReason = FinishReason.InAssemble;
 	
 		private List<JokePart> Parts = new List<JokePart>();
+
+		private Dictionary<Color, int> ColorsMap = new Dictionary<Color, int>();
+		private Dictionary<Shape, int> ShapesMap = new Dictionary<Shape, int>();
 		
+		private float TotalScore = 0f;
+
 		public Joke(int MaxSequenceLength)
 		{
 			this.MaxSequenceLength = MaxSequenceLength;
 		}
 	
-		public float Score()
+		public void Score()
 		{
-			float TotalScore = 0f;
+			TotalScore = 0f;
 
 			float Multiplyer = 1;
 			//MultiplyersCycle
@@ -117,6 +123,10 @@ namespace GGJ24.Scripts
 			}
 
 			TotalScore *= Multiplyer;
+		}
+
+		public float GetTotalScore()
+		{
 			return TotalScore;
 		}
 		
@@ -130,6 +140,23 @@ namespace GGJ24.Scripts
 			JokePart lastPart = Parts.Count > 0 ? Parts[Parts.Count() - 1] : newJokePart;
 			
 			Parts.Add(newJokePart);
+
+			if (newJokePart.OperationType == JokePartOperationType.Joker)
+			{
+				foreach (Color color in Enum.GetValues(typeof(Color)))
+				{
+					AddColor(color);
+				}
+				foreach (Shape shape in Enum.GetValues(typeof(Shape)))
+				{
+					AddShape(shape);
+				}
+			}
+			else
+			{
+				AddColor(newJokePart.Color);
+				AddShape(newJokePart.Shape);
+			}
 
 			if (Parts.Count >= MaxSequenceLength)
 			{
@@ -201,6 +228,36 @@ namespace GGJ24.Scripts
 		public FinishReason GetFinishReason()
 		{
 			return _finishReason;
+		}
+
+		void AddColor(Color color)
+		{
+			/*if (ColorsMap.ContainsKey(color))
+			{
+				ColorsMap[color]++;
+			}
+			else
+			{
+				ColorsMap.Add(color, 1);
+			}*/
+			                                        
+			ColorsMap[color] = GetColorCount(color) + 1; 
+		}
+
+		void AddShape(Shape shape)
+		{                                  
+			ShapesMap[shape] = GetShapeCount(shape) + 1;      
+		}
+		public int GetColorCount(Color color)
+		{
+			ColorsMap.TryGetValue(color, out int result);
+			return result;
+		}
+
+		public int GetShapeCount(Shape shape)
+		{
+			ShapesMap.TryGetValue(shape, out int result);
+			return result;
 		}
 	}
 }
