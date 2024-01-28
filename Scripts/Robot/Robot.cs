@@ -51,7 +51,7 @@ namespace GGJ24.Scripts.Robot
         [Export] private float _reactionFadeoutTimeMsec = 1400;
         
         private float _lastBoredomUpdate = 0.2f;
-        [Export] private float _boredomTick = 3000;
+        [Export] private float _boredomTick = 5000;
 
         public float LastAddedFun = 0.0f;
 
@@ -203,7 +203,9 @@ namespace GGJ24.Scripts.Robot
             _lastBoredomUpdate = Time.GetTicksMsec();
             _boredom++;
 
-            AddFun(-_boredomLevelsToFunDebuff[_boredom]);
+            var index = Mathf.Min(_boredom, _boredomLevelsToFunDebuff.Count - 1);
+
+            AddFun(-_boredomLevelsToFunDebuff[index]);
         }
     }
 }
