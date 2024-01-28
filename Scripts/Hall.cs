@@ -104,7 +104,7 @@ public class Hall : Node2D
 				if (Value != 0)
 				{
 					const float FadeOutTime = 1f;
-					JokePartTip tip = Tip.InstanceOrNull<JokePartTip>();
+					/*JokePartTip tip = Tip.InstanceOrNull<JokePartTip>();
 					AddChild(tip);
 					tip.Position = robot.Position + TipOffset * Vector2.Up;
 					Godot.Color tipColor = Value > 0 ? Godot.Color.ColorN("Green") : Godot.Color.ColorN("Red");
@@ -136,7 +136,7 @@ public class Hall : Node2D
 							tip = null;
 						}
 					};
-					fadeOutTimer.Start();
+					fadeOutTimer.Start();*/
 				}
 			}
 		}
