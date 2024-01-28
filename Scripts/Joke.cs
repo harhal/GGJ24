@@ -140,23 +140,9 @@ namespace GGJ24.Scripts
 			JokePart lastPart = Parts.Count > 0 ? Parts[Parts.Count() - 1] : newJokePart;
 			
 			Parts.Add(newJokePart);
-
-			if (newJokePart.OperationType == JokePartOperationType.Joker)
-			{
-				foreach (Color color in Enum.GetValues(typeof(Color)))
-				{
-					AddColor(color);
-				}
-				foreach (Shape shape in Enum.GetValues(typeof(Shape)))
-				{
-					AddShape(shape);
-				}
-			}
-			else
-			{
-				AddColor(newJokePart.Color);
-				AddShape(newJokePart.Shape);
-			}
+			
+			AddColor(newJokePart.Color);
+			AddShape(newJokePart.Shape);
 
 			if (Parts.Count >= MaxSequenceLength)
 			{

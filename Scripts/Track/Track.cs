@@ -8,8 +8,8 @@ namespace GGJ24.Scripts.Track
 	{
 		[Export] public PackedScene TrackItemTemplate;
 		[Export] public float TrackPadVelocity = 200;
-		[Export] public float MinSpawnDelay = 1.0f;
-		[Export] public float MaxSpawnDelay = 2.0f;
+		[Export] public float MinSpawnDelay = 0.6f;
+		[Export] public float MaxSpawnDelay = 1.2f;
 
 		[Signal]
 		public delegate void TrackSpawnedNewItem(TrackJokePart trackJokePart);
