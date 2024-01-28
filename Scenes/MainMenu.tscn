@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/TravelToScene.cs" type="Script" id=1]
-[ext_resource path="res://Scenes/MainScene.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Resources/Fonts/Poco.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Scripts/Menu/ExitApp.cs" type="Script" id=4]
 [ext_resource path="res://Resources/bg (2).png" type="Texture" id=5]
@@ -14,7 +13,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 script = ExtResource( 1 )
-_scene = ExtResource( 2 )
+_sceneIdx = 1
 
 [node name="TextureRect" type="TextureRect" parent="Control"]
 anchor_right = 1.0

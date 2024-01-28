@@ -12,8 +12,8 @@ namespace GGJ24.Scripts
 
 	public class GameStateTracker : Node
 	{
-		[Export] private PackedScene WinScreen;
-		[Export] private PackedScene LooseScreen;
+		[Export] private int _winScreenIdx = 2;
+		[Export] private int _looseScreenIdx = 3;
 		[Signal] public delegate void GameStateChanged(GameState state);
 
 		public GameState GameState = GameState.Running;
@@ -41,16 +41,7 @@ namespace GGJ24.Scripts
 				closeDelay.AutoReset = true;
 				closeDelay.Elapsed += (sender, args) =>
 				{
-					Node newScene = GameState == GameState.Won ? WinScreen.InstanceOrNull<Node>() : LooseScreen.InstanceOrNull<Node>();
-					
-					Node root = GetTree().Root;
-					Node preRoot = this;
-					while (preRoot != root && preRoot != null)
-					{
-						preRoot = preRoot.GetParent();
-					}
-					root.AddChild(newScene);
-					root.RemoveChild(preRoot);
+					ScenesCatalog.MoveToScene(this, GameState == GameState.Won ? _winScreenIdx : _looseScreenIdx);
 				};
 				closeDelay.Start();
 			}
