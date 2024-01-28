@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Resources/cloud.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/JokeAssembler.cs" type="Script" id=2]
@@ -8,6 +8,26 @@
 [ext_resource path="res://Resources/repeat_rule_hint.png" type="Texture" id=6]
 [ext_resource path="res://Resources/spoiler_rule_hint.png" type="Texture" id=8]
 [ext_resource path="res://Resources/hints_shadow.png" type="Texture" id=9]
+
+[sub_resource type="Animation" id=2]
+resource_name = "1"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.4, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.992157, 0.34902, 0.34902, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "1"
+length = 3.0
 
 [node name="JokeAssembler" type="Node2D"]
 script = ExtResource( 2 )
@@ -45,3 +65,14 @@ unique_name_in_owner = true
 position = Vector2( 105, 7 )
 texture = ExtResource( 6 )
 script = ExtResource( 5 )
+
+[node name="FadeOut" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+anims/1 = SubResource( 2 )
+
+[node name="Delay" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+anims/1 = SubResource( 1 )
+
+[connection signal="animation_finished" from="FadeOut" to="." method="_on_FadeOut_animation_finished"]
+[connection signal="animation_finished" from="Delay" to="." method="_on_Delay_animation_finished"]

@@ -31,6 +31,9 @@ public class JokeAssembler : Node2D
 	[Export] private float TipOffset = 700f;
 	[Export] private float JokeBlockTime = 3f;
 
+	private AnimationPlayer FadeOut;
+	private AnimationPlayer Delay;
+
 	private Node2D BackGround;
 	private RuleHint MismatchRuleHint;
 	private RuleHint SpoilerRuleHint;
@@ -116,6 +119,8 @@ public class JokeAssembler : Node2D
 		SpoilerRuleHint.JokeBlockTime = JokeBlockTime;
 		RepeatRuleHint = GetNode<RuleHint>("%RepeatRuleHint");
 		RepeatRuleHint.JokeBlockTime = JokeBlockTime;
+		FadeOut = GetNode<AnimationPlayer>("%FadeOut");
+		Delay = GetNode<AnimationPlayer>("%Delay");
 	}
 
 	public override void _Process(float delta)
@@ -256,35 +261,8 @@ public class JokeAssembler : Node2D
 					break;
 			}
 		}
-		
-		float startTimeMs = Time.GetTicksMsec();
-		
-		Timer fadeOutTimer = new Timer(10f);
-		fadeOutTimer.Elapsed += (object sender, ElapsedEventArgs e) => 
-		{
-			float timePassed = (Time.GetTicksMsec() - startTimeMs) / 1000f;
-
-			BackGround.Modulate = jokeResultBackgroundModulate.LinearInterpolate(
-					Colors.White, 
-					Mathf.Pow(timePassed / JokeBlockTime, 2));
-			
-			
-			if (timePassed >= JokeBlockTime)
-			{
-				(sender as Timer).Stop();
-				(sender as Timer).Dispose();
-				OnJokePushed();
-			}
-		};
-		fadeOutTimer.Start();
-		
-		Timer pushDelay = new Timer(JokeBlockTime / 2 * 1000);
-		pushDelay.AutoReset = false;
-		pushDelay.Elapsed += (object sender, ElapsedEventArgs e) => 
-		{
-			Hall.StaticHall.PushJoke(AssembledJoke);
-		};
-		pushDelay.Start();
+		FadeOut.Play("1");
+		Delay.Play("1");
 	}
 
 	void OnJokePushed()
@@ -304,4 +282,15 @@ public class JokeAssembler : Node2D
 		BackGround.Modulate = Colors.White;
 		Modulate = Colors.White;
 	}
+
+
+	private void _on_FadeOut_animation_finished(String anim_name)
+	{
+		OnJokePushed();
+	}
+	private void _on_Delay_animation_finished(String anim_name)
+	{
+		Hall.StaticHall.PushJoke(AssembledJoke);
+	}
+
 }
