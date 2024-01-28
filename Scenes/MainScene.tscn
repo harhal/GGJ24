@@ -65,10 +65,11 @@ text = "Joke"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
-volume_db = -5.0
+volume_db = -10.0
 autoplay = true
 
 [node name="JokeLiner" type="AudioStreamPlayer2D" parent="."]
+pitch_scale = 1.7
 script = ExtResource( 9 )
 _audioSamples = [ ExtResource( 27 ), ExtResource( 14 ), ExtResource( 26 ), ExtResource( 19 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 15 ), ExtResource( 10 ), ExtResource( 23 ), ExtResource( 22 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 12 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 16 ) ]
 
