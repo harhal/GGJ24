@@ -116,10 +116,11 @@ public class Hall : Node2D
 					fadeOutTimer.Interval = 10f;
 					fadeOutTimer.Elapsed += (sender, args) =>
 					{
-						if (!fadeOutTimer.Enabled)
+						if (tip != null)
 						{
 							return;
 						}
+						
 						float localTime = (Time.GetTicksMsec() - startTimeMs) / 1000f;
 						float progress = Mathf.InverseLerp(0, FadeOutTime, localTime);
 						float alpha = Mathf.Sqrt(1f - progress);
@@ -132,6 +133,7 @@ public class Hall : Node2D
 							(sender as System.Timers.Timer).Stop();
 							(sender as System.Timers.Timer).Dispose();
 							tip.QueueFree();
+							tip = null;
 						}
 					};
 					fadeOutTimer.Start();
