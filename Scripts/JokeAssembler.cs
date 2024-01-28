@@ -194,6 +194,8 @@ public class JokeAssembler : Node2D
 				}
 				case JokePartOperationType.Double:
 					tipText = "x2";
+					if (!AssembledJoke.IsFailed())
+						tipColor = Godot.Color.ColorN("Red");
 					break;
 				case JokePartOperationType.Opener:
 					if (!AssembledJoke.IsFailed())
@@ -227,6 +229,8 @@ public class JokeAssembler : Node2D
 					break;
 				case JokePartOperationType.Punchline:
 					tipText = "x2";
+					if (!AssembledJoke.IsFailed())
+						tipColor = Godot.Color.ColorN("Red");
 					break;
 			}
 
