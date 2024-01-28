@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/TravelToScene.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/MainScene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Fonts/Poco.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Scripts/Menu/ExitApp.cs" type="Script" id=4]
+[ext_resource path="res://Resources/bg (2).png" type="Texture" id=5]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+script = ExtResource( 1 )
+_scene = ExtResource( 2 )
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1025.0
+margin_bottom = 595.0
+texture = ExtResource( 5 )
+expand = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Button" type="Button" parent="Control/VBoxContainer"]
+margin_right = 192.0
+margin_bottom = 126.0
+custom_fonts/font = ExtResource( 3 )
+text = "Play"
+icon_align = 1
+
+[node name="Button2" type="Button" parent="Control/VBoxContainer"]
+margin_top = 130.0
+margin_right = 192.0
+margin_bottom = 256.0
+custom_fonts/font = ExtResource( 3 )
+text = "Exit"
+script = ExtResource( 4 )
+
+[connection signal="pressed" from="Control/VBoxContainer/Button" to="Control" method="_on_Button_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Button2" to="Control/VBoxContainer/Button2" method="_on_Button2_pressed"]

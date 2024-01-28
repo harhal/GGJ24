@@ -1,3 +1,4 @@
+using System.Timers;
 using Godot;
 
 namespace GGJ24.Scripts
@@ -11,6 +12,8 @@ namespace GGJ24.Scripts
 
 	public class GameStateTracker : Node
 	{
+		[Export] private PackedScene WinScreen;
+		[Export] private PackedScene LooseScreen;
 		[Signal] public delegate void GameStateChanged(GameState state);
 
 		public GameState GameState = GameState.Running;
@@ -27,6 +30,29 @@ namespace GGJ24.Scripts
 				EmitSignal(nameof(GameStateChanged), GameState);
 
 				PropagateStateToSiblings();
+
+				if (GameState == GameState.Running)
+				{
+					return;
+				}
+				
+				System.Timers.Timer closeDelay = new System.Timers.Timer();
+				closeDelay.Interval = 1f;
+				closeDelay.AutoReset = true;
+				closeDelay.Elapsed += (sender, args) =>
+				{
+					Node newScene = GameState == GameState.Won ? WinScreen.InstanceOrNull<Node>() : LooseScreen.InstanceOrNull<Node>();
+					
+					Node root = GetTree().Root;
+					Node preRoot = this;
+					while (preRoot != root && preRoot != null)
+					{
+						preRoot = preRoot.GetParent();
+					}
+					root.AddChild(newScene);
+					root.RemoveChild(preRoot);
+				};
+				closeDelay.Start();
 			}
 		}
 

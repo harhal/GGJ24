@@ -14,8 +14,8 @@ Tip = ExtResource( 3 )
 TipOffset = 190.0
 
 [node name="Background" type="Sprite" parent="."]
-visible = false
-scale = Vector2( 10.4, 1.44666 )
+position = Vector2( 40.625, 3.67647 )
+scale = Vector2( 8.64258, 1.09145 )
 texture = ExtResource( 1 )
 
 [node name="Place root" type="Node2D" parent="."]

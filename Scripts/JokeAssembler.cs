@@ -31,6 +31,7 @@ public class JokeAssembler : Node2D
 	[Export] private float TipOffset = 700f;
 	[Export] private float FadeoutTime = 1f;
 
+	private Node2D BackGround;
 
 	private Joke AssembledJoke;
 
@@ -97,6 +98,7 @@ public class JokeAssembler : Node2D
 	{
 		Elements = new List<ElementWithTransition>();
 		BasePlace = GetNode<Node2D>(BasePlacePath).Position;
+		BackGround = GetNode<Node2D>("Background");
 	}
 
 	public override void _Process(float delta)
@@ -210,7 +212,8 @@ public class JokeAssembler : Node2D
 
 		if (AssembledJoke.IsFailed())
 		{
-			Modulate = Godot.Color.ColorN("Red");
+			
+			BackGround.Modulate = Godot.Color.ColorN("Red");
 			
 			JokePartTip tip = Tip.InstanceOrNull<JokePartTip>();
 			AddChild(tip);
@@ -274,6 +277,7 @@ public class JokeAssembler : Node2D
 			
 		Elements.Clear();
 
+		BackGround.Modulate = Godot.Color.ColorN("White");
 		Modulate = Godot.Color.ColorN("White");
 	}
 }

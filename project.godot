@@ -11,12 +11,16 @@ config_version=4
 [application]
 
 config/name="GGJ24"
-run/main_scene="res://Scenes/MainScene.tscn"
+run/main_scene="res://Scenes/BaseScene.tscn"
 config/icon="res://icon.png"
 
 [display]
 
 window/size/resizable=false
+
+[global]
+
+Scene=false
 
 [gui]
 
