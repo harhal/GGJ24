@@ -286,11 +286,11 @@ public class JokeAssembler : Node2D
 
 	private void _on_FadeOut_animation_finished(String anim_name)
 	{
-		OnJokePushed();
+		Hall.StaticHall.PushJoke(AssembledJoke);
 	}
 	private void _on_Delay_animation_finished(String anim_name)
 	{
-		Hall.StaticHall.PushJoke(AssembledJoke);
+		OnJokePushed();
 	}
 
 }
