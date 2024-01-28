@@ -18,7 +18,7 @@ namespace GGJ24.Scripts.JokeParts
 
 		public JokePart Create(Color inColor, Shape inShape, JokePartOperationType inOperationType)
 		{
-			GD.Print("Joke part created!");
+			GD.Print("Joke part ", inOperationType, " created");
 
 			var jokePart = JokePartTemplate.InstanceOrNull<JokePart>();
 			if (jokePart == null)

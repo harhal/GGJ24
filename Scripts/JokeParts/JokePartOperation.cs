@@ -31,6 +31,7 @@ namespace GGJ24.Scripts.JokeParts
 
 	public class JokePartOperation : Node2D
 	{
+		private const double SpriteRotationDeviation = Math.PI / 4;
 		// setup from payload:
 		public JokePartOperationType Type;
 		protected Texture Texture;
@@ -68,6 +69,11 @@ namespace GGJ24.Scripts.JokeParts
 			sprite.Translate(TextureOffset);
 			sprite.Texture = Texture;
 			sprite.Scale = new Vector2(0.7f, 0.7f);
+
+			// add funny small random rotation
+			var random = new Random();
+			var rotationDeviation = random.NextDouble() * SpriteRotationDeviation - SpriteRotationDeviation / 2;
+			sprite.Rotate((float)rotationDeviation);
 		}
 		
 	}
