@@ -253,6 +253,14 @@ public class JokeAssembler : Node2D
 			}
 		};
 		fadeOutTimer.Start();
+		
+		Timer pushDelay = new Timer(FadeoutTime / 2 * 1000);
+		pushDelay.AutoReset = true;
+		pushDelay.Elapsed += (object sender, ElapsedEventArgs e) => 
+		{
+			Hall.StaticHall.PushJoke(AssembledJoke);
+		};
+		pushDelay.Start();
 	}
 
 	void OnJokePushed()
@@ -263,8 +271,6 @@ public class JokeAssembler : Node2D
 		{
 			Elements[idx].Element.QueueFree();
 		}
-		
-		Hall.StaticHall.PushJoke(AssembledJoke);
 			
 		Elements.Clear();
 

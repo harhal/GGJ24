@@ -123,17 +123,18 @@ public class Hall : Node2D
 						float localTime = (Time.GetTicksMsec() - startTimeMs) / 1000f;
 						float progress = Mathf.InverseLerp(0, FadeOutTime, localTime);
 						float alpha = Mathf.Sqrt(1f - progress);
-						Godot.Color newModulate = Modulate;
+						Godot.Color newModulate = tip.Modulate;
 						newModulate.a = alpha;
-						Modulate = newModulate;
+						tip.Modulate = newModulate;
 
 						if (localTime >= FadeOutTime)
 						{
 							(sender as System.Timers.Timer).Stop();
 							(sender as System.Timers.Timer).Dispose();
-							QueueFree();
+							tip.QueueFree();
 						}
 					};
+					fadeOutTimer.Start();
 				}
 			}
 		}
