@@ -186,7 +186,7 @@ public class JokeAssembler : Node2D
 
 					break;
 				case JokePartOperationType.Robot:
-					if (AssembledJoke.IsFailed())
+					if (!AssembledJoke.IsFailed())
 					{
 						tipText = "+4";
 					}
