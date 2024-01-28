@@ -29,7 +29,7 @@ namespace GGJ24.Scripts.Robot
         //Clamped to [0,1]
         private float _fun;
 
-        [Export] private float _maxFunToScale = 20;
+        [Export] private float _maxFunToScale = 60;
 
         public float GetFun()
         {

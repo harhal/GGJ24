@@ -17,62 +17,65 @@ texture = ExtResource( 2 )
 
 [node name="ChildSquareBot" parent="." instance=ExtResource( 6 )]
 position = Vector2( -342, 77 )
-_startingFun = 0.9
+_startingFun = 0.4
 
 [node name="ChildSquareBot2" parent="." instance=ExtResource( 6 )]
 position = Vector2( -456, -139 )
 scale = Vector2( 0.9, 0.9 )
 _robotColor = 2
-_startingFun = 0.9
+_startingFun = 0.4
 
 [node name="ChildSquareBot3" parent="." instance=ExtResource( 6 )]
 position = Vector2( -347, -348 )
 _robotColor = 2
-_startingFun = 0.9
+_startingFun = 0.4
 
 [node name="ChildSquareBot4" parent="." instance=ExtResource( 6 )]
 position = Vector2( -127, -341 )
 _robotColor = 3
+_startingFun = 0.4
 
 [node name="CircleBot" parent="." instance=ExtResource( 3 )]
 position = Vector2( -548, -350 )
 scale = Vector2( 0.85, 0.85 )
-_startingFun = 0.7
+_startingFun = 0.4
 
 [node name="CircleBot2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 204, -134 )
 scale = Vector2( 0.9, 0.9 )
 _robotColor = 4
-_startingFun = 0.5
+_startingFun = 0.4
 
 [node name="CircleBot3" parent="." instance=ExtResource( 3 )]
 position = Vector2( -234, -137 )
 scale = Vector2( 0.9, 0.9 )
 _robotColor = 5
-_startingFun = 0.5
+_startingFun = 0.4
 
 [node name="CircleBot4" parent="." instance=ExtResource( 3 )]
 position = Vector2( 99, 64 )
 _robotColor = 5
-_startingFun = 0.9
+_startingFun = 0.4
 
 [node name="ChildTriangleBot" parent="." instance=ExtResource( 4 )]
 position = Vector2( -582, 37 )
 _robotColor = 4
-_startingFun = 0.7
+_startingFun = 0.4
 
 [node name="ChildTriangleBot2" parent="." instance=ExtResource( 4 )]
 position = Vector2( -12, -158 )
 scale = Vector2( 0.9, 0.9 )
+_startingFun = 0.4
 
 [node name="ChildTriangleBot3" parent="." instance=ExtResource( 4 )]
 position = Vector2( -128, 54 )
 _robotColor = 3
+_startingFun = 0.4
 
 [node name="ChildTriangleBot4" parent="." instance=ExtResource( 4 )]
 position = Vector2( 101, -352 )
 _robotColor = 3
-_startingFun = 0.9
+_startingFun = 0.4
 
 [node name="AnimatedChar" type="AnimatedSprite" parent="."]
 position = Vector2( -705, 328 )
