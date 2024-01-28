@@ -83,7 +83,6 @@ pitch_scale = 0.84
 script = ExtResource( 8 )
 _audioSamples = [ ExtResource( 30 ), ExtResource( 28 ), ExtResource( 29 ) ]
 
-[connection signal="JokePartAdded" from="JokeAssembler" to="." method="_on_JokeAssembler_JokePartAdded"]
 [connection signal="pressed" from="AddButton" to="Hall" method="_on_AddButton_pressed"]
 [connection signal="pressed" from="SubButton" to="Hall" method="_on_SubButton_pressed"]
 [connection signal="finished" from="JokeLiner" to="JokeLiner" method="_on_JokeLiner_finished"]
