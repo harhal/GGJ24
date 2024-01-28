@@ -1,9 +1,9 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://Resources/Emoji/punchline.png" type="Texture" id=1]
+[ext_resource path="res://Resources/Emoji/eggplant.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/JokeParts/JokePartOperationPayload.cs" type="Script" id=2]
 
 [resource]
 script = ExtResource( 2 )
-Type = 11
+Type = 9
 EmojiTextures = [ ExtResource( 1 ) ]

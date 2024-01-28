@@ -1,12 +1,21 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/JokeParts/JokePartOperationFactory.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/JokeParts/JokePartOperation.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Resources/JokePartOperations/AddOne_JPOP.tres" type="Resource" id=3]
 [ext_resource path="res://Resources/JokePartOperations/MultiplyTwo_JPOP.tres" type="Resource" id=4]
 [ext_resource path="res://Resources/JokePartOperations/Punchline_JPOP.tres" type="Resource" id=5]
+[ext_resource path="res://Resources/JokePartOperations/Joker_JPOP.tres" type="Resource" id=6]
+[ext_resource path="res://Resources/JokePartOperations/Double_JPOP.tres" type="Resource" id=7]
+[ext_resource path="res://Resources/JokePartOperations/Robot_JPOP.tres" type="Resource" id=8]
+[ext_resource path="res://Resources/JokePartOperations/Opener_JPOP.tres" type="Resource" id=9]
+[ext_resource path="res://Resources/JokePartOperations/Human_JPOP.tres" type="Resource" id=10]
+[ext_resource path="res://Resources/JokePartOperations/MinusTwo_JPOP.tres" type="Resource" id=11]
+[ext_resource path="res://Resources/JokePartOperations/Spoiler_JPOP.tres" type="Resource" id=12]
+[ext_resource path="res://Resources/JokePartOperations/AddTwo_JPOP.tres" type="Resource" id=13]
+[ext_resource path="res://Resources/JokePartOperations/MinusOne_JPOP.tres" type="Resource" id=14]
 
 [node name="JokePartOperationFactory" type="Node"]
 script = ExtResource( 1 )
 JokePartOperationTemplate = ExtResource( 2 )
-JokePartOperationsSetup = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ]
+JokePartOperationsSetup = [ ExtResource( 3 ), ExtResource( 13 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 14 ), ExtResource( 11 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 12 ) ]

@@ -1,21 +1,26 @@
-﻿using Godot;
+﻿using System;
+using System.Collections.Generic;
+using Godot;
 
 namespace GGJ24.Scripts.JokeParts
 {
     public partial class JokePartOperationPayload : Resource
     {
-        public JokePartOperationPayload() : this(JokePartOperationType.None, null, JokePartProcessPhase.None) {}
-        public JokePartOperationPayload(JokePartOperationType inType, Texture inTexture, JokePartProcessPhase inProcessPhase)
-        {
-            Type = inType;
-            Texture = inTexture;
-            ProcessPhase = inProcessPhase;
-        }
-
         [Export] public JokePartOperationType Type;
 		
-        [Export] public Texture Texture;
+        [Export] public List<Texture> EmojiTextures;
 
-        [Export] public JokePartProcessPhase ProcessPhase;
+        // [Export] public JokePartProcessPhase ProcessPhase;
+
+        public Texture GetRandomEmojiTexture()
+        {
+            if (EmojiTextures.Count == 0)
+            {
+                return null;
+            }
+
+            var random = new Random();
+            return EmojiTextures[random.Next(0, EmojiTextures.Count)];
+        }
     }
 }

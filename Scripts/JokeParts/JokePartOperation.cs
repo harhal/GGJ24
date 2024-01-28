@@ -14,7 +14,7 @@ namespace GGJ24.Scripts.JokeParts
 		Opener,
 		Robot,
 		Human,
-		Spoiler,
+		Spoiler,	// eggplant
 		Punchline,
 		Joker,
 		Max
@@ -34,8 +34,8 @@ namespace GGJ24.Scripts.JokeParts
 		// setup from payload:
 		public JokePartOperationType Type;
 		protected Texture Texture;
-		public JokePartProcessPhase ProcessPhase;
-		
+		// public JokePartProcessPhase ProcessPhase;
+
 		// state:
 		public Vector2 TextureOffset;
 
@@ -49,8 +49,8 @@ namespace GGJ24.Scripts.JokeParts
 		{
 			Type = payload.Type;
 	
-			Texture = payload.Texture;
-			ProcessPhase = payload.ProcessPhase;
+			Texture = payload.GetRandomEmojiTexture();
+			// ProcessPhase = payload.ProcessPhase;
 		}
 
 		// Called when the node enters the scene tree for the first time.
@@ -67,6 +67,7 @@ namespace GGJ24.Scripts.JokeParts
 		{
 			sprite.Translate(TextureOffset);
 			sprite.Texture = Texture;
+			sprite.Scale = new Vector2(0.7f, 0.7f);
 		}
 		
 	}
