@@ -1,3 +1,4 @@
+using System.Timers;
 using Godot;
 using GGJ24.Scripts;
 using GGJ24.Scripts.Robot;
@@ -6,11 +7,14 @@ public class Hall : Node2D
 {
 	[Export] public int HallWidth = 5;
 	[Export] public int HallDepth = 3;
-	
+
 	[Export] private int _lowFunRobotsToLose = 9;
-	
-	[Signal] public delegate void AllRobotsCompletedFun();
-	[Signal] public delegate void MostRobotsGotLowFun();
+
+	[Signal]
+	public delegate void AllRobotsCompletedFun();
+
+	[Signal]
+	public delegate void MostRobotsGotLowFun();
 
 	private const int RobotsCount = 12;
 	private Robot[] _robots = new Robot[RobotsCount];
@@ -18,6 +22,10 @@ public class Hall : Node2D
 	private int _lastAddedIndex = 0;
 	private int _completedFunRobots = 0;
 	private int _lowFunRobots = 0;
+
+	public static Hall StaticHall;
+	[Export] private PackedScene Tip;
+	[Export] private float TipOffset = 100;
 
 	public void Register(Robot inRobot)
 	{
@@ -29,6 +37,7 @@ public class Hall : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		StaticHall = this;
 		var children = GetChildren();
 		foreach (var child in children)
 		{
@@ -56,7 +65,7 @@ public class Hall : Node2D
 		{
 			_lowFunRobots++;
 		}
-		
+
 		if (previousFunLevel == FunLevel.Low)
 		{
 			_lowFunRobots--;
@@ -68,7 +77,7 @@ public class Hall : Node2D
 			EmitSignal(nameof(MostRobotsGotLowFun));
 		}
 	}
-	
+
 	private void _on_SubButton_pressed()
 	{
 		for (var i = 0; i < RobotsCount; i++)
@@ -85,10 +94,49 @@ public class Hall : Node2D
 		}
 	}
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+	public void PushJoke(Joke assembledJoke)
+	{
+		foreach (Robot robot in _robots)
+		{
+			if (robot != null)
+			{
+				float Value = robot.ReceiveJoke(assembledJoke);
+				if (Value != 0)
+				{
+					const float FadeOutTime = 1f;
+					JokePartTip tip = Tip.InstanceOrNull<JokePartTip>();
+					AddChild(tip);
+					tip.Position = robot.Position + TipOffset * Vector2.Up;
+					Godot.Color tipColor = Value > 0 ? Godot.Color.ColorN("Green") : Godot.Color.ColorN("Red");
+					tip.SetText(Value.ToString("0."), tipColor, FadeOutTime);
+
+					float startTimeMs = Time.GetTicksMsec();
+					
+					System.Timers.Timer fadeOutTimer = new System.Timers.Timer();
+					fadeOutTimer.Interval = 10f;
+					fadeOutTimer.Elapsed += (sender, args) =>
+					{
+						if (!fadeOutTimer.Enabled)
+						{
+							return;
+						}
+						float localTime = (Time.GetTicksMsec() - startTimeMs) / 1000f;
+						float progress = Mathf.InverseLerp(0, FadeOutTime, localTime);
+						float alpha = Mathf.Sqrt(1f - progress);
+						Godot.Color newModulate = Modulate;
+						newModulate.a = alpha;
+						Modulate = newModulate;
+
+						if (localTime >= FadeOutTime)
+						{
+							(sender as System.Timers.Timer).Stop();
+							(sender as System.Timers.Timer).Dispose();
+							QueueFree();
+						}
+					};
+				}
+			}
+		}
+	}
 }
 

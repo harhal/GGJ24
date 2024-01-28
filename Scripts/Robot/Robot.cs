@@ -29,6 +29,8 @@ namespace GGJ24.Scripts.Robot
         //Clamped to [0,1]
         private float _fun;
 
+        [Export] private float _maxFunToScale = 20;
+
         public float GetFun()
         {
             return _fun;
@@ -94,16 +96,28 @@ namespace GGJ24.Scripts.Robot
             AddFun(-_boredomLevelsToFunDebuff[currentLevel]);
         }
 
-		public bool ReceiveJoke(Joke joke)
-		{
-			//foreach (var VARIABLE in joke.Parts)
-			{
-				//joke
-			}
-			
-			GD.Print("Haha!");
-			AddFun(0.1f);
-			return false;
+		public float ReceiveJoke(Joke joke)
+        {
+            float baseScore = joke.GetTotalScore();
+            if (baseScore == 0)
+            {
+                return 0;
+            }
+
+            if (baseScore < 0)
+            {
+                AddFun(baseScore / _maxFunToScale);
+            }
+            
+            int colorCount = joke.GetColorCount(_robotColor);
+            int shapeCount = joke.GetShapeCount(_robotShape);
+            
+            float colorBonus = (Mathf.Pow(2, colorCount - 1) - 1) / Mathf.Pow(2, colorCount - 1);
+            float shapeBonus = (Mathf.Pow(3, shapeCount - 1) - 1) / Mathf.Pow(3, shapeCount - 1);
+
+            float finalScore = baseScore + baseScore * colorBonus + baseScore * shapeBonus;
+            AddFun(finalScore / _maxFunToScale);
+            return finalScore;
 		}
 
         public void AddFun(float deltaFun)
