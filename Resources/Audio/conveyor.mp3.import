@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/conveyor.mp3-5588458b834389fda6259669585fdf4c.mp3str"
+
+[deps]
+
+source_file="res://Resources/Audio/conveyor.mp3"
+dest_files=[ "res://.import/conveyor.mp3-5588458b834389fda6259669585fdf4c.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

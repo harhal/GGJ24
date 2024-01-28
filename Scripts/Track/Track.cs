@@ -10,7 +10,10 @@ namespace GGJ24.Scripts.Track
 		[Export] public float TrackPadVelocity = 200;
 		[Export] public float MinSpawnDelay = 1.0f;
 		[Export] public float MaxSpawnDelay = 2.0f;
-		
+
+		[Signal]
+		public delegate void TrackSpawnedNewItem(TrackJokePart trackJokePart);
+
 		public TrackStart TrackStart;
 		public Position2D DeadZone;
 		public Sprite TrackPad;
@@ -70,6 +73,8 @@ namespace GGJ24.Scripts.Track
 			trackItem.DeadZoneY = DeadZone.Position.y;
 
 			AddChild(trackItem);
+
+			EmitSignal(nameof(TrackSpawnedNewItem), trackItem);
 		}
 
 		private void _on_GameStateTracker_GameStateChanged(GameState state)
