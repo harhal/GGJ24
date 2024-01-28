@@ -5,6 +5,7 @@ namespace GGJ24.Scripts.Track
 {
 	public class TrackJokePart : Node2D
 	{
+		public AudioStreamPlayer2D SpawnAudioPlayer;
 
 		public GameStateTracker GameStateTracker;
 
@@ -28,6 +29,9 @@ namespace GGJ24.Scripts.Track
 			GameStateTracker.Connect(nameof(GameStateTracker.GameStateChanged), this, "_on_GameStateTracker_GameStateChanged");
 
 			AddChild(ContainedJokePart);
+			
+			SpawnAudioPlayer = GetNode<AudioStreamPlayer2D>("%SpawnAudioPlayer");
+			SpawnAudioPlayer.Play();
 		}
 		
 		private void _on_GameStateTracker_GameStateChanged(GameState state)
