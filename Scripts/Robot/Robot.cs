@@ -48,10 +48,10 @@ namespace GGJ24.Scripts.Robot
         private Sprite _reactionSprite;
 
         private float _fadeoutStartTime = 0.2f;
-        [Export] private float _reactionFadeoutTimeMsec = 1400;
+        [Export] private float _reactionFadeoutTimeMsec = 1200;
         
         private float _lastBoredomUpdate = 0.2f;
-        [Export] private float _boredomTick = 5000;
+        [Export] private float _boredomTick = 4000;
 
         public float LastAddedFun = 0.0f;
 
@@ -205,7 +205,14 @@ namespace GGJ24.Scripts.Robot
 
             var index = Mathf.Min(_boredom, _boredomLevelsToFunDebuff.Count - 1);
 
-            AddFun(-_boredomLevelsToFunDebuff[index]);
+            var debuff = _boredomLevelsToFunDebuff[index];
+
+            if (debuff > 0)
+            {
+                React(1);
+            }
+
+            AddFun(-debuff);
         }
     }
 }
