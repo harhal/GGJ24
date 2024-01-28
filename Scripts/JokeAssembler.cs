@@ -74,7 +74,7 @@ public class JokeAssembler : Node2D
 			return false;
 		}
 		
-		AddChild(Element);
+		BackGround.AddChild(Element);
 		Element.GlobalTransform = GlobalTransform;
 		Elements.Add(new ElementWithTransition(Element, Element.Position, Element.Position));
 		UpdateDesiredLocations();
@@ -219,9 +219,11 @@ public class JokeAssembler : Node2D
 			tip.SetText(tipText, tipColor, JokeBlockTime);
 		}
 
+		var jokeResultBackgroundModulateAlpha = 0.6f;
+		var jokeResultBackgroundModulate = new Godot.Color(Colors.LightGreen, jokeResultBackgroundModulateAlpha);
 		if (AssembledJoke.IsFailed())
 		{
-			BackGround.Modulate = Godot.Color.ColorN("Red");
+			jokeResultBackgroundModulate = new Godot.Color(Colors.LightCoral, jokeResultBackgroundModulateAlpha);
 
 			switch (AssembledJoke.GetFinishReason())
 			{
@@ -242,14 +244,14 @@ public class JokeAssembler : Node2D
 		Timer fadeOutTimer = new Timer(10f);
 		fadeOutTimer.Elapsed += (object sender, ElapsedEventArgs e) => 
 		{
-			float localTime = (Time.GetTicksMsec() - startTimeMs) / 1000f;
-			// float progress = Mathf.InverseLerp(0, FadeoutTime, localTime);
-			// float alpha = Mathf.Sqrt(1f - progress);
-			// Godot.Color newModulate = Modulate;
-			// newModulate.a = alpha;
-			// Modulate = newModulate;
+			float timePassed = (Time.GetTicksMsec() - startTimeMs) / 1000f;
+
+			BackGround.Modulate = jokeResultBackgroundModulate.LinearInterpolate(
+					Colors.White, 
+					Mathf.Pow(timePassed / JokeBlockTime, 2));
 			
-			if (localTime >= JokeBlockTime)
+			
+			if (timePassed >= JokeBlockTime)
 			{
 				(sender as Timer).Stop();
 				(sender as Timer).Dispose();
@@ -278,7 +280,7 @@ public class JokeAssembler : Node2D
 			
 		Elements.Clear();
 
-		BackGround.Modulate = Godot.Color.ColorN("White");
-		Modulate = Godot.Color.ColorN("White");
+		BackGround.Modulate = Colors.White;
+		Modulate = Colors.White;
 	}
 }

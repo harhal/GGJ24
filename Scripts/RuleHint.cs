@@ -31,7 +31,6 @@ namespace GGJ24.Scripts
 				return;
 			}
 
-			GD.Print(TimeLeft * 10);
 			if (Math.Floor(TimeLeft * 10) % 3 == 0)
 			{
 				Modulate = Colors.Red;
