@@ -5,10 +5,10 @@ namespace GGJ24.Scripts.Track
 {
 	public class TrackJokePart : Node2D
 	{
-		[Export] public float Velocity = 100;
 
 		public GameStateTracker GameStateTracker;
 
+		public float Velocity;
 		public JokePart ContainedJokePart;
 		public float DeadZoneY;
 

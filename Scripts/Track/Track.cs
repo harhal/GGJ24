@@ -7,9 +7,9 @@ namespace GGJ24.Scripts.Track
 	public class Track : Node2D
 	{
 		[Export] public PackedScene TrackItemTemplate;
-		[Export] public float TrackPadVelocity = 100;
-		[Export] public float MinSpawnDelay = 2.0f;
-		[Export] public float MaxSpawnDelay = 4.0f;
+		[Export] public float TrackPadVelocity = 200;
+		[Export] public float MinSpawnDelay = 1.0f;
+		[Export] public float MaxSpawnDelay = 2.0f;
 		
 		public TrackStart TrackStart;
 		public Position2D DeadZone;
@@ -65,6 +65,7 @@ namespace GGJ24.Scripts.Track
 			trackItem.GameStateTracker = GameStateTracker;
 
 			trackItem.Position = TrackStart.GetStartPosition();
+			trackItem.Velocity = TrackPadVelocity;
 			trackItem.ContainedJokePart = JokePartFactory.CreateRandom();
 			trackItem.DeadZoneY = DeadZone.Position.y;
 
