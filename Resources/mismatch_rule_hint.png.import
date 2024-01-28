@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/shape_rule_hint.png-6c1acda6b75300a5e8c80821223f321a.stex"
+path="res://.import/mismatch_rule_hint.png-cb1a7e183dde82f407f4c37614fd6018.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/shape_rule_hint.png"
-dest_files=[ "res://.import/shape_rule_hint.png-6c1acda6b75300a5e8c80821223f321a.stex" ]
+source_file="res://Resources/mismatch_rule_hint.png"
+dest_files=[ "res://.import/mismatch_rule_hint.png-cb1a7e183dde82f407f4c37614fd6018.stex" ]
 
 [params]
 

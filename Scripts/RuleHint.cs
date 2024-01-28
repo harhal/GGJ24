@@ -5,7 +5,7 @@ namespace GGJ24.Scripts
 {
 	public class RuleHint : Sprite
 	{
-		[Export] private float TriggerTime = 1;
+		public float JokeBlockTime;
 
 		private float TimeLeft;
 		// Called when the node enters the scene tree for the first time.
@@ -16,7 +16,7 @@ namespace GGJ24.Scripts
 		public void Trigger()
 		{
 			Modulate = Colors.Red;
-			TimeLeft = TriggerTime;
+			TimeLeft = JokeBlockTime;
 			SetProcess(true);
 		}
 
@@ -32,7 +32,7 @@ namespace GGJ24.Scripts
 			}
 
 			GD.Print(TimeLeft * 10);
-			if (Math.Floor(TimeLeft * 10) % 2 == 0)
+			if (Math.Floor(TimeLeft * 10) % 3 == 0)
 			{
 				Modulate = Colors.Red;
 			}

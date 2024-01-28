@@ -29,7 +29,7 @@ public class JokeAssembler : Node2D
 	[Export] private int MaxSequenceLength = 5;
 	[Export] private PackedScene Tip;
 	[Export] private float TipOffset = 700f;
-	[Export] private float FadeoutTime = 3f;
+	[Export] private float JokeBlockTime = 3f;
 
 	private Node2D BackGround;
 	private RuleHint MismatchRuleHint;
@@ -103,8 +103,11 @@ public class JokeAssembler : Node2D
 		BasePlace = GetNode<Node2D>(BasePlacePath).Position;
 		BackGround = GetNode<Node2D>("Background");
 		MismatchRuleHint = GetNode<RuleHint>("%MismatchRuleHint");
+		MismatchRuleHint.JokeBlockTime = JokeBlockTime;
 		SpoilerRuleHint = GetNode<RuleHint>("%SpoilerRuleHint");
+		SpoilerRuleHint.JokeBlockTime = JokeBlockTime;
 		RepeatRuleHint = GetNode<RuleHint>("%RepeatRuleHint");
+		RepeatRuleHint.JokeBlockTime = JokeBlockTime;
 	}
 
 	public override void _Process(float delta)
@@ -120,7 +123,7 @@ public class JokeAssembler : Node2D
 		{
 			ElementWithTransition Focus = Elements[idx];
 			Vector2 NewPos = Focus.StartLocation;
-			NewPos = NewPos.LinearInterpolate(Focus.DesiredLocation, TransitionProgress);
+			NewPos = NewPos.LinearInterpolate(Focus.DesiredLocation, Mathf.Clamp(TransitionProgress,0, 1));
 			Focus.Element.Position = NewPos;
 		}
 		
@@ -213,7 +216,7 @@ public class JokeAssembler : Node2D
 					break;
 			}
 
-			tip.SetText(tipText, tipColor, FadeoutTime);
+			tip.SetText(tipText, tipColor, JokeBlockTime);
 		}
 
 		if (AssembledJoke.IsFailed())
@@ -246,7 +249,7 @@ public class JokeAssembler : Node2D
 			// newModulate.a = alpha;
 			// Modulate = newModulate;
 			
-			if (localTime >= FadeoutTime)
+			if (localTime >= JokeBlockTime)
 			{
 				(sender as Timer).Stop();
 				(sender as Timer).Dispose();
@@ -255,7 +258,7 @@ public class JokeAssembler : Node2D
 		};
 		fadeOutTimer.Start();
 		
-		Timer pushDelay = new Timer(FadeoutTime / 2 * 1000);
+		Timer pushDelay = new Timer(JokeBlockTime / 2 * 1000);
 		pushDelay.AutoReset = false;
 		pushDelay.Elapsed += (object sender, ElapsedEventArgs e) => 
 		{
