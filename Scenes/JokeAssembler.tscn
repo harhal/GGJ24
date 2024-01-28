@@ -21,7 +21,7 @@ TipOffset = 190.0
 texture = ExtResource( 1 )
 
 [node name="Place root" type="Node2D" parent="."]
-position = Vector2( 140, -10 )
+position = Vector2( 70, 0 )
 
 [node name="HintsShadows" type="Sprite" parent="."]
 position = Vector2( 240, 106 )
