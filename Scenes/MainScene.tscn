@@ -12,13 +12,6 @@ script = ExtResource( 4 )
 [node name="Hall" parent="." instance=ExtResource( 1 )]
 unique_name_in_owner = true
 
-[node name="AddButton" type="Button" parent="."]
-margin_left = -458.0
-margin_top = 290.0
-margin_right = -67.0
-margin_bottom = 400.0
-text = "Joke"
-
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 2, 2 )
@@ -34,6 +27,13 @@ TipOffset = 700.0
 
 [node name="GameStateTracker" parent="." instance=ExtResource( 5 )]
 unique_name_in_owner = true
+
+[node name="AddButton" type="Button" parent="."]
+margin_left = -458.0
+margin_top = 290.0
+margin_right = -67.0
+margin_bottom = 400.0
+text = "Joke"
 
 [node name="SubButton" type="Button" parent="."]
 margin_left = 115.0
