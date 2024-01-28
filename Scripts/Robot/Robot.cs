@@ -151,7 +151,7 @@ namespace GGJ24.Scripts.Robot
                 _funLevel = FunLevel.Completed;
 
                 _mainSprite.Frame = 3;
-                _mainSprite.Modulate = new Godot.Color(1, 1, 1, 1);
+                _mainSprite.Modulate = new Godot.Color("a4a4a4");
             
                 _glareSprite.Frame = 3;
             }
@@ -164,6 +164,7 @@ namespace GGJ24.Scripts.Robot
 
         void React(int emojiNum)
         {
+            if (!_isPlaying) return;
             AnimatedSprite emoji = _reactionSprite.GetChild<AnimatedSprite>(0);
             emoji.Frame = emojiNum;
 
