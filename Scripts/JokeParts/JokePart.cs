@@ -73,10 +73,8 @@ namespace GGJ24.Scripts.JokeParts
 			
 			if (JokeAssembler.StaticAssembler != null)
 			{
-				JokeAssembler.StaticAssembler.AddElement(this);
+				bIsFree = !JokeAssembler.StaticAssembler.AddElement(this);
 			}
-
-			bIsFree = false;
 		}
 	}
 }
