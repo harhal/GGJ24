@@ -32,6 +32,9 @@ public class JokeAssembler : Node2D
 	[Export] private float FadeoutTime = 3f;
 
 	private Node2D BackGround;
+	private RuleHint MismatchRuleHint;
+	private RuleHint SpoilerRuleHint;
+	private RuleHint RepeatRuleHint;
 
 	private Joke AssembledJoke;
 
@@ -99,6 +102,9 @@ public class JokeAssembler : Node2D
 		Elements = new List<ElementWithTransition>();
 		BasePlace = GetNode<Node2D>(BasePlacePath).Position;
 		BackGround = GetNode<Node2D>("Background");
+		MismatchRuleHint = GetNode<RuleHint>("%MismatchRuleHint");
+		SpoilerRuleHint = GetNode<RuleHint>("%SpoilerRuleHint");
+		RepeatRuleHint = GetNode<RuleHint>("%RepeatRuleHint");
 	}
 
 	public override void _Process(float delta)
@@ -212,28 +218,20 @@ public class JokeAssembler : Node2D
 
 		if (AssembledJoke.IsFailed())
 		{
-			
 			BackGround.Modulate = Godot.Color.ColorN("Red");
-			
-			JokePartTip tip = Tip.InstanceOrNull<JokePartTip>();
-			AddChild(tip);
-			tip.Position = Elements[Elements.Count - 1].DesiredLocation;
 
-			string tipText = "";
 			switch (AssembledJoke.GetFinishReason())
 			{
-				case FinishReason.Mismatch:
-					tipText = "Missmatch";
+				case FinishReason.ColorAndShapeMismatch:
+					MismatchRuleHint.Trigger();
 					break;
 				case FinishReason.Repeat:
-					tipText = "Repeate";
+					RepeatRuleHint.Trigger();
 					break;
 				case FinishReason.Spoiled:
-					tipText = "Spoiled";
+					SpoilerRuleHint.Trigger();
 					break;
 			}
-			
-			tip.SetText(tipText, Godot.Color.ColorN("Red"), FadeoutTime);
 		}
 		
 		float startTimeMs = Time.GetTicksMsec();
@@ -242,11 +240,11 @@ public class JokeAssembler : Node2D
 		fadeOutTimer.Elapsed += (object sender, ElapsedEventArgs e) => 
 		{
 			float localTime = (Time.GetTicksMsec() - startTimeMs) / 1000f;
-			float progress = Mathf.InverseLerp(0, FadeoutTime, localTime);
-			float alpha = Mathf.Sqrt(1f - progress);
-			Godot.Color newModulate = Modulate;
-			newModulate.a = alpha;
-			Modulate = newModulate;
+			// float progress = Mathf.InverseLerp(0, FadeoutTime, localTime);
+			// float alpha = Mathf.Sqrt(1f - progress);
+			// Godot.Color newModulate = Modulate;
+			// newModulate.a = alpha;
+			// Modulate = newModulate;
 			
 			if (localTime >= FadeoutTime)
 			{

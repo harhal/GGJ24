@@ -9,7 +9,7 @@ public enum FinishReason
 	InAssemble,
 	Full,
 	Punchline,
-	Mismatch,
+	ColorAndShapeMismatch,
 	Repeat,
 	Spoiled
 }
@@ -162,7 +162,7 @@ namespace GGJ24.Scripts
 
 			if (!bMatchByColor && !bMatchByShape && !bJoker)
 			{
-				_finishReason = FinishReason.Mismatch;
+				_finishReason = FinishReason.ColorAndShapeMismatch;
 			}
 
 			if (IsRepeat(newJokePart))

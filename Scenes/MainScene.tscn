@@ -22,7 +22,7 @@ current = true
 position = Vector2( 721, 0 )
 
 [node name="JokeAssembler" parent="." instance=ExtResource( 3 )]
-position = Vector2( -15, 385 )
+position = Vector2( -16, 365 )
 Tip = null
 
 [node name="GameStateTracker" parent="." instance=ExtResource( 5 )]
